@@ -1,36 +1,38 @@
 package main
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
+
+func main() {
+	fmt.Println(longestPalindrome("babad"))
+}
 
 func longestPalindrome(s string) string {
-	res := ""
-	det := 0
-	m := make(map[uint8]map[int]bool)
+	maxI, maxJ := 0, 0
 
-	ss := strings.Split(s, "")
+	ss := "#" + strings.Join(strings.Split(s, ""), "#") + "#"
 
-	s = "#" + strings.Join(ss, "#") + "#"
+	i, j := 0, 0
+	fmt.Println(ss)
+	// babad
+	// #b#a#b#a#d#
+	// 012345678910
 
-	for i := 0; i < len(s); i++ {
-		v := s[i]
-		m[v][i] = true
-
-		// 如果对称位找到，则弹针向前移动1
-		if idx, ok := m[v][det-i]; ok {
-			det++
-		} else { // 没有找到则需要更新中间值位置，重新遍历
-			i = det
+	for i = 0; i < len(ss); i++ {
+		for j = i + 1; j < len(ss); j++ {
+			if 2 * i - j < 0 || ss[j] != ss[2 * i - j] {
+				break
+			}
 		}
-
-
+		fmt.Println(i, j)
+		// 需要移动中心，先记下最大值
+		if j - i > maxJ - maxI {
+			maxJ, maxI = j, i
+		}
 	}
-	//输入：s = "babad"
-	//输出："bab"
-	//解释："aba" 同样是符合题意的答案。
+	fmt.Println(maxI, maxJ)
 
-	// abababa
-
-	// 1234321
-
-	return res
+	return s[maxI/2:maxJ/2]
 }
