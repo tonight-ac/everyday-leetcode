@@ -15,10 +15,6 @@ func longestPalindrome(s string) string {
 	ss := "#" + strings.Join(strings.Split(s, ""), "#") + "#"
 
 	i, j := 0, 0
-	fmt.Println(ss)
-	// babad
-	// #b#a#b#a#d#
-	// 012345678910
 
 	for i = 0; i < len(ss); i++ {
 		for j = i + 1; j < len(ss); j++ {
@@ -26,13 +22,11 @@ func longestPalindrome(s string) string {
 				break
 			}
 		}
-		fmt.Println(i, j)
 		// 需要移动中心，先记下最大值
 		if j - i > maxJ - maxI {
 			maxJ, maxI = j, i
 		}
 	}
-	fmt.Println(maxI, maxJ)
 
-	return s[maxI/2:maxJ/2]
+	return strings.Join(strings.Split(ss[2*maxI-(maxJ-1):maxJ-1], "#"), "")
 }
