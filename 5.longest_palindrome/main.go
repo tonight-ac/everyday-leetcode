@@ -28,5 +28,5 @@ func longestPalindrome(s string) string {
 		}
 	}
 
-	return strings.Join(strings.Split(ss[2*maxI-(maxJ-1):maxJ-1], "#"), "")
+	return s[(2*maxI-(maxJ-1))/2:(maxJ-1)/2]
 }
