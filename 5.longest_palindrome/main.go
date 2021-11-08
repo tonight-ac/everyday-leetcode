@@ -28,5 +28,7 @@ func longestPalindrome(s string) string {
 		}
 	}
 
+	// 2*maxI-(maxJ-1) 左边界
+	// 2:(maxJ-1) 右边界
 	return s[(2*maxI-(maxJ-1))/2:(maxJ-1)/2]
 }
