@@ -1,9 +1,17 @@
 package main
 
-import "unicode"
+import (
+	"fmt"
+	"unicode"
+)
 
-const UINT32_MIN uint32 = 0
-const UINT32_MAX uint32 = ^uint32(0)
+const INT32MAX = ^uint32(0)
+const INT32MIN = uint32(0)
+
+func main() {
+	fmt.Println(int32(INT32MAX))
+	fmt.Println(int32(INT32MIN))
+}
 
 func myAtoi(s string) int {
 	res := int32(0)
@@ -12,9 +20,9 @@ func myAtoi(s string) int {
 		if unicode.IsDigit(v) {
 			if temp := res * 10 + char*(v-'0'); res != temp/10 {
 				if char == 1 {
-					return int(UINT32_MAX)
+					return int(INT32MAX)
 				}
-				return int(UINT32_MIN)
+				return int(INT32MIN)
 			}
 			res *= 10
 			res += char*(v-'0')
