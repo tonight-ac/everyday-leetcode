@@ -11,6 +11,15 @@ func main() {
 func maxArea(height []int) int {
 	max, h, l := 0, 0, 0
 	for i, j := 0, len(height)-1; i < j; {
+		// 0啥也装不了，跳过
+		if height[i] == 0 {
+			i++
+			continue
+		}
+		if height[j] == 0 {
+			j--
+			continue
+		}
 		// 记录当前宽度
 		l = j-i
 
