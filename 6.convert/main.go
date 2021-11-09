@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func main() {
 	fmt.Println(convert("ABC", 1))
@@ -21,7 +24,8 @@ func convert(s string, numRows int) string {
 
 	// 计算一个全周期的步长
 	cycle := 2 * numRows - 2
-	res := ""
+	// 使用+拼接字符串消耗性能和内存
+	var res strings.Builder
 
 	for row := 0; row < numRows; row++ {
 		// 计算需要跳步次数
@@ -30,14 +34,14 @@ func convert(s string, numRows int) string {
 			diff = cycle
 		}
 		for idx := row; idx < len(s); {
-			res += string(s[idx])
+			res.WriteByte(s[idx])
 			idx += diff
-			// 跳步等于全周期步长做减法会出现0，导致原地踏步一次
+			// 跳步等于全周期步长时做减法会出现0，导致原地踏步一次
 			if diff != cycle {
 				diff = cycle - diff
 			}
 		}
 	}
 
-	return res
+	return res.String()
 }
