@@ -23,6 +23,7 @@ func main() {
 }
 //0 <= nums.length <= 3000
 //-105 <= nums[i] <= 105
+// 这个方法很慢，但是无法优化
 func threeSum(nums []int) [][]int {
 	res := make([][]int, 0)
 
