@@ -8,6 +8,11 @@ func isMatch(s string, p string) bool {
 		return false
 	}
 
+	for i, j := 0, 0; i < len(s) || j < len(p); {
+		if s[i] == p[j] {
+
+		}
+	}
 
 	return true
 }
