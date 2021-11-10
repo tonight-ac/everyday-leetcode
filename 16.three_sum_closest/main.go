@@ -39,7 +39,7 @@ func threeSumClosest(nums []int, target int) int {
 	// 进行遍历
 	for i := 0; i < len(nums); i++ {
 		// 选定i之后，利用有序性从两边开始选择
-		for start, end := i+1, len(nums) - 1; start < end; {
+		for start, end := i + 1, len(nums) - 1; start < end; {
 			sum := nums[start] + nums[end] + nums[i]
 
 			// 更新更接近的值
