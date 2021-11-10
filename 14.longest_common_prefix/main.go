@@ -9,6 +9,7 @@ func main() {
 //输入：strs = ["flower","flow","flight"]
 //输出："fl"
 
+// 使用一个退化的字典树
 func longestCommonPrefix(strs []string) string {
 	// 选取第一个作为模版，不要判空，入参必有一个
 	p := strs[0]
