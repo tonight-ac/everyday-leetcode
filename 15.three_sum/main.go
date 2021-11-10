@@ -19,7 +19,8 @@ import (
 // -4 3
 
 func main() {
-	fmt.Println(threeSum([]int{-1,0,1,2,-1,-4}))
+	fmt.Println(threeSum([]int{0,0,0,0}))
+	// -4 -1 -1 0 1 2
 }
 //0 <= nums.length <= 3000
 //-105 <= nums[i] <= 105
@@ -38,25 +39,42 @@ func threeSum(nums []int) [][]int {
 		// 如果当前数字大于0，则三数之和一定大于0，所以结束循环
 		if nums[i] > 0 { break }
 
-		// 去重 因为i所遍历的后续内容，必定是i-1所遍历的后续内容的子集
+		// i所需要遍历的序列，必然是i-1所遍历序列的子集，所以上一轮已经遍历过了，跳过
 		if i > 0 && nums[i] == nums[i-1] { continue }
 
-		// 锁定一个，找到包含它的所有tuple
-		for l, r := i+1, len(nums)-1; l < r; {
-			sum := nums[i]+nums[l]+nums[r]
-			if sum == 0 { // 已经match
-				res = append(res, []int{nums[i], nums[l], nums[r]})
-				for l < r && nums[l] == nums[l+1] { l++ } // 目前已经match了，再计算也是重复的，移动到最后一个重复元素
-				for l < r && nums[r] == nums[r-1] { r-- } // 目前已经match了，再计算也是重复的，移动到最后一个重复元素
-				l++ // 此时再次循环还是重复的，还可以发生match，所以再移动一个
-				r-- // 此时再次循环还是重复的，还可以发生match，所以再移动一个
-				// 如果都未发生重复，也本身就需要移动，而且由于有序性，不可能同样的数字还有多解法，两个都移动
-			} else if sum < 0 { // 三数之和为负，说明较小，需要向大的方向移动
-				l++
-			} else { // 三数之和为正，说明较大，需要向小的方向移动
-				r--
+		for j := i + 1; j < len(nums); j++ {
+			tar := -(nums[i]+nums[j])
+			// 二分法
+			for l, r := j + 1, len(nums) - 1; l <= r; {
+				mid := (l + r) / 2
+				if tar < nums[mid] {
+					r = mid - 1
+				} else if tar > nums[mid] {
+					l = mid + 1
+				} else {
+					// 确实找到了，加入结果集合
+					res = append(res, []int{nums[i], nums[j], tar})
+					break
+				}
 			}
 		}
+
+		// 锁定一个，找到包含它的所有tuple
+		//for l, r := i+1, len(nums)-1; l < r; {
+		//	sum := nums[i]+nums[l]+nums[r]
+		//	if sum == 0 { // 已经match
+		//		res = append(res, []int{nums[i], nums[l], nums[r]})
+		//		for l < r && nums[l] == nums[l+1] { l++ } // 目前已经match了，再计算也是重复的，移动到最后一个重复元素
+		//		for l < r && nums[r] == nums[r-1] { r-- } // 目前已经match了，再计算也是重复的，移动到最后一个重复元素
+		//		l++ // 此时再次循环还是重复的，还可以发生match，所以再移动一个
+		//		r-- // 此时再次循环还是重复的，还可以发生match，所以再移动一个
+		//		// 如果都未发生重复，也本身就需要移动，而且由于有序性，不可能同样的数字还有多解法，两个都移动
+		//	} else if sum < 0 { // 三数之和为负，说明较小，需要向大的方向移动
+		//		l++
+		//	} else { // 三数之和为正，说明较大，需要向小的方向移动
+		//		r--
+		//	}
+		//}
 	}
 
 	return res
