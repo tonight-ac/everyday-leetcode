@@ -8,7 +8,7 @@ import "math"
 // -4 -1 1 2
 
 func threeSumClosest(nums []int, target int) int {
-	// 把前三个切下来
+	// 把前三个切下来 尝试一下贪心算法
 	tuple := append(make([]int, 0), nums[0:3]...)
 	res := tuple[0]+tuple[1]+tuple[2]
 	diff := math.Abs(float64(res-target))
