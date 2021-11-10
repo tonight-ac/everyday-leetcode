@@ -3,6 +3,7 @@ package main
 //输入：s = "mississippi" p = "mis*is*p*."
 //输出：false
 
+// 讨巧的递归做法
 func isMatch(s string, p string) bool {
 	// 如果p已经匹配完了，那就判断一下s有没有匹配完
 	if p == "" {
