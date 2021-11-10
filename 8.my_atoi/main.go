@@ -5,7 +5,7 @@ import "fmt"
 func main() {
 	//fmt.Println(INT32MAX)
 	//fmt.Println(INT32MIN)
-	fmt.Println(myAtoi(" -42"))
+	fmt.Println(myAtoi("42"))
 }
 
 //读入字符串并丢弃无用的前导空格
@@ -19,34 +19,36 @@ const INT32MAX = 2147483647
 const INT32MIN = -2147483648
 
 func myAtoi(s string) int {
-	// 0 检查空格 检查符号
-	step := 0
+	idx := 0
 	char := int32(1)
 	res := int32(0)
 
 	// 去除空格
+	for ; idx < len(s); idx++ {
+		if s[idx] != ' ' {
+			break
+		}
+	}
+
+	// 避免越界
+	if idx >= len(s) {
+		return 0
+	}
 
 	// 去除符号
-	for _, v := range s {
-		if v == ' ' && step >= 0 {
-			return 0
-		}
+	if s[idx] == '-' {
+		char = -1
+		idx++
+	} else if s[idx] == '+' {
+		char = 1
+		idx++
+	}
 
-		if (v == '-' || v == '+') && step >= 1 {
-			fmt.Println(v)
-			return 0
-		}
-
-		if v == ' ' {
-			step++
-		} else if v == '-' {
-			char = -1
-			step++
-		} else if v == '+' {
-			char = 1
-			step++
-		} else if v >= '0' && v <= '9' {
-			temp := res*10+char*(v-'0')
+	// 整理数字
+	for ; idx < len(s); idx++ {
+		if s[idx] >= '0' && s[idx] <= '9' {
+			temp := res*10+char*int32(s[idx]-'0')
+			// 进行可逆操作判断是否发生越界
 			if res != temp/10 {
 				if char == 1 {
 					return INT32MAX
@@ -54,7 +56,7 @@ func myAtoi(s string) int {
 				return INT32MIN
 			}
 			res = temp
-		} else {
+		} else { // 非数字立刻截断，返回在此之前读出的数字结果
 			break
 		}
 	}
