@@ -6,6 +6,17 @@ type ListNode struct {
 	Next *ListNode
 }
 
+// 字符串加法 本质：模拟加法
+
+// 不好处理的地方在于进位
+
+// 目标：节约内存 能不申请不新申请 复用已存在的节点
+
+// 三步走
+// 1 求公共长部分的和
+// 2 拼接多余需要处理的节点
+// 3 处理进位
+
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	tot, mod, div := 0, 0, 0
 	head := l1
@@ -24,20 +35,17 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 		l1, l2 = l1.Next, l2.Next
 	}
 
-	// l2可能没有，也可能有
-	// 总之将l2多余部分全部拼接到l1
+	// 将多余部分全部拼接到l1
 	if l1.Next == nil {
 		l1.Next = l2.Next
 	}
 
-	// 从拼接处开始处理进位
+	// 处理进位
 	for {
-		// 没有进位，无须处理
 		if div == 0 {
 			break
 		}
 
-		// 剩最后一次进位了
 		if l1.Next == nil {
 			l1.Next = &ListNode{ Val: 1 }
 			break
