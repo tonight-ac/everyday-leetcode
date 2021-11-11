@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 var m = map[int32]string{
 	'2': "abc",
 	'3': "def",
@@ -24,7 +26,7 @@ func letterCombinations(digits string) []string {
 
 	for _, v := range com {
 		// 插入元素
-
+		fmt.Println(v)
 		// 递归
 		_ = letterCombinations(digits[1:])
 		// 删除元素
