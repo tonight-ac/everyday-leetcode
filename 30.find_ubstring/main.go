@@ -1,5 +1,11 @@
 package main
 
+import "fmt"
+
+func main() {
+	fmt.Println(findSubstring("barfoothefoobarman", []string{"bar", "foo"}))
+}
+
 func findSubstring(s string, words []string) []int {
 	// 把words组装成一个map，方便搜索
 	m := make(map[string]interface{}, len(words))
@@ -12,7 +18,7 @@ func findSubstring(s string, words []string) []int {
 
 	res := make([]int, 0)
 	count := 0
-	for i := 0; i < len(s); {
+	for i := 0; i <= len(s)-length; {
 		if _, ok := m[s[i:i+length]]; ok {
 			count++
 			i += length
@@ -27,7 +33,7 @@ func findSubstring(s string, words []string) []int {
 		// i-(len(words)-1)*length
 		if count == len(words) {
 			// 下标计算得到
-			res = append(res, i-(len(words)-1)*length)
+			res = append(res, i-len(words)*length)
 		}
 	}
 
