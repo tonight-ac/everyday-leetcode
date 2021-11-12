@@ -7,7 +7,7 @@ func main() {
 }
 
 var res = make([]int, 2)
-// 以二分法为基础做一定的改进 TODO 未上传，且待优化
+// 以二分法为基础做一定的改进 TODO 未上传，且待优化 递归可能更快，更优雅
 func searchRange(nums []int, target int) []int {
 	for l, r := 0, len(nums)-1; l <= r; {
 		mid := (l + r) / 2
