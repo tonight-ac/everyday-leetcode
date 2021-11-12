@@ -12,7 +12,26 @@ func main() {
 //[9]
 //预期结果：
 //[6,9,12]
-// TODO
+// TODO 试一下递归吧
+
+func recursion(m map[string]bool, s string, count int) {
+	if count == 3 {
+		return
+	}
+
+	// 当前匹配
+	if v, ok := m[s[0:3]]; ok && !v {
+		// match 上之后继续向下
+		m[s[0:3]] = true
+		recursion(m, s[3:], count+1)
+		m[s[0:3]] = false
+	}
+
+	// 不匹配继续向下
+	recursion(m, s[1:], count)
+
+}
+
 func findSubstring(s string, words []string) []int {
 	// 把words组装成一个map，方便搜索
 	m := make(map[string]bool, len(words))
