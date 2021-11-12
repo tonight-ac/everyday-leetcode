@@ -1,9 +1,7 @@
 package main
 
 func isValidSudoku(board [][]byte) bool {
-	row := make([][]bool, 9, 10)
-	clo := make([][]bool, 9, 10)
-	cube := make([][]bool, 9, 10)
+	var row, clo, cube [9][10]byte
 
 	for i, r := range board {
 		for j, v := range r {
@@ -12,11 +10,14 @@ func isValidSudoku(board [][]byte) bool {
 				continue
 			}
 
-			if row[i][v-'0'] || clo[j][v-'0'] || cube[3*(i/3)+j/3][v-'0'] {
+			// 系ASCII码
+			nums := v-'0'
+
+			if row[i][nums] + clo[j][nums] + cube[3*(i/3)+j/3][nums] > 0 {
 				return false
 			}
 
-			row[i][v-'0'], clo[j][v-'0'], cube[3*(i/3)+j/3][v-'0'] = true, true, true
+			row[i][nums], clo[j][nums], cube[3*(i/3)+j/3][nums] = 1, 1, 1
 		}
 	}
 
