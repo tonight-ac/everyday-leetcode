@@ -30,7 +30,7 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 
 			// 把反转后的链表拼接回去
 			// start.Next已经反转到末尾，接上 1 -> 3
-			start.Next.Next = nextFirst
+			end.Next = nextFirst
 			// 连接上0 —> 2
 			start.Next = thisFirst
 			// 把start也归位
