@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	strStr("", "ABCABCABCD")
+	strStr("", "AAAAAAAA")
 	// ABCABCD
 	// [0 0 0 1 2 3 0]
 }
@@ -24,6 +24,10 @@ func strStr(haystack string, needle string) int {
 	// ABCABCD
 	next := make([]int, m)
 	// 自己先和自己匹配一遍，求出next数组
+	// ABCABCABCD
+	// [0 0 0 1 2 3 4 5 6 0]
+	// AAAAAAAA
+	// [0 1 2 3 4 5 6 7]
 	for i, j := 1, 0; i < m; i++ {
 		fmt.Println(i, j)
 		for j > 0 && needle[i] != needle[j] {
