@@ -30,9 +30,6 @@ func search(nums []int, target int) int {
 	for l, r := 0, len(nums)-1; l <= r; {
 		mid := (l + r) / 2
 		if target < nums[mid] {
-			if nums[l] < target {
-
-			}
 			r = mid - 1
 		} else if target > nums[mid] {
 			l = mid + 1
