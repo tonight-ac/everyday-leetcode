@@ -43,7 +43,6 @@ func letterCombinations(digits string) []string {
 	return res[:end]
 }
 
-// TODO 可以改strings.Builder 要在进入之后下一轮函数里做增加
 func recursion(digits string, s string) {
 	// 递归结束条件
 	if digits == "" {
