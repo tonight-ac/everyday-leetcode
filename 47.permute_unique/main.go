@@ -1,11 +1,15 @@
 package main
 
-//输入：nums = [1,2,3]
-//输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+import "fmt"
+
+func main() {
+	fmt.Println(permuteUnique([]int{1,1,2}))
+}
 
 var list []int
 var res [][]int
-func permute(nums []int) [][]int {
+// 在46的基础上，做一些微调
+func permuteUnique(nums []int) [][]int {
 	list = nums
 
 	res = make([][]int, 0)
@@ -21,8 +25,11 @@ func recursion(r []int, m map[int]bool) {
 		return
 	}
 
+	// 在这层栈调用里使用一个局部变量map
+	uni := make(map[int]bool)
 	for i := 0; i < len(list); i++ {
-		if !m[i] {
+		if !m[i] && !uni[list[i]] {
+			uni[list[i]] = true // 进行去重，不允许这层进行重复的尝试，所以每层都不会出现重复的
 			r = append(r, list[i])
 			m[i] = true
 			recursion(r, m)
