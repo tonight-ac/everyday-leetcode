@@ -5,7 +5,7 @@ import "fmt"
 //输入：nums = [4,5,6,7,0,1,2], target = 0
 //输出：4
 func main() {
-	fmt.Println(search([]int{4,5,6,7,0,1,2}, 0))
+	fmt.Println(search([]int{1, 3}, 0))
 }
 
 //输入：
@@ -22,6 +22,8 @@ func search(nums []int, target int) int {
 	l, r, mid := 0, 0, 0
 	for l, r = 0, len(nums)-1; l <= r; {
 		mid = (l + r) / 2
+		// 这种情况说明，该序列为生序
+		if mid + 1 >= len(nums) { break }
 		if nums[mid] > nums[mid+1] {
 			break
 		} else if nums[mid] < nums[mid+1] {
@@ -29,7 +31,9 @@ func search(nums []int, target int) int {
 		}
 	}
 
-	if target < nums[len(nums)-1] {
+	if mid + 1 >= len(nums) {
+		l, r = 0, len(nums) - 1
+	}else if target < nums[len(nums)-1] {
 		l, r = mid + 1, len(nums)-1
 	} else if target > nums[len(nums)-1] {
 		l, r = 0, mid - 1
@@ -49,5 +53,5 @@ func search(nums []int, target int) int {
 		}
 	}
 
-	return 0
+	return -1
 }
