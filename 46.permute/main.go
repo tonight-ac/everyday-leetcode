@@ -1,7 +1,13 @@
 package main
 
+import "fmt"
+
 //输入：nums = [1,2,3]
 //输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+
+func main() {
+	fmt.Println(permute([]int{1,2,3,4,5}))
+}
 
 var list []int
 var res [][]int
