@@ -35,10 +35,15 @@ func search(nums []int, target int) int {
 		}
 	}
 
+	// 4,5,6,7,0,1,2
+	// r目前指向7 l目前指向0
+
+	// 在前半段
 	if target >= small {
 		return binarySearch(nums, 0, r, target)
 	}
 
+	// 在后半段
 	return binarySearch(nums, l, len(nums) - 1, target)
 }
 
