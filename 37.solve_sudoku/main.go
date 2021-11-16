@@ -11,6 +11,7 @@ var row, clo, cube [9][10]byte
 func solveSudoku(board [][]byte) {
 	row, clo, cube = [9][10]byte{}, [9][10]byte{}, [9][10]byte{}
 
+	// 把已经存在的加入map中方便查重
 	for i, r := range board {
 		for j, v := range r {
 			if v == '.' { continue }
