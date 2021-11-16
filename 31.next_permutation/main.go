@@ -17,6 +17,8 @@ func main() {
 // 同时要求越靠后越好
 // 然后将最小的大于他的数字和他交换
 // 再把剩余的按照升序排列
+
+// 是不是从前向后扫更简单一些
 func nextPermutation(nums []int) {
 	if len(nums) == 1 { return }
 
