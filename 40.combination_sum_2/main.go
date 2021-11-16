@@ -9,7 +9,7 @@ import (
 //5
 
 func main() {
-	fmt.Println(combinationSum2([]int{2,5,2,1,2}, 5))
+	fmt.Println(combinationSum2([]int{2,2,2}, 2))
 }
 
 var res [][]int
@@ -25,8 +25,6 @@ func combinationSum2(candidates []int, target int) [][]int {
 
 	// 排序避免重复
 	sort.Ints(candidates)
-
-	fmt.Println(candidates)
 
 	can = candidates
 
@@ -54,13 +52,15 @@ func recursion(idx int, tar int, list []int, m map[int]int) {
 	if m[can[idx]] > 0 {
 		m[can[idx]]--
 		list = append(list, can[idx])
-		recursion(idx, tar - can[idx], list, m)
+		recursion(idx - 1, tar - can[idx], list, m)
 		m[can[idx]]++
 		list = list[:len(list)-1]
 	}
 
-	// 不使用can[idx]
-	if can[idx] != can[idx-1] {
-		recursion(idx - 1, tar, list, m)
+	// 此处要用循环，如果出现重复，你不能在上面的if中不进入，转而选择下一个完全相同的再次进行尝试
+	// 这样势必会导致重复
+	for idx > 0 && can[idx] == can[idx - 1] {
+		idx--
 	}
+	recursion(idx - 1, tar, list, m)
 }
