@@ -5,7 +5,7 @@ import "fmt"
 //输入：nums = [4,5,6,7,0,1,2], target = 0
 //输出：4
 func main() {
-	fmt.Println(search([]int{4,5,6,7}, 4))
+	fmt.Println(search([]int{4,5,6,7,0,1,2}, 2))
 }
 
 //输入：
@@ -16,16 +16,17 @@ func main() {
 //预期结果：
 //-1
 func search(nums []int, target int) int {
-	// 二分法查询反转位置
+	// small 必然刚好大于 large
 	small, large := nums[0], nums[len(nums)-1]
 
-	// 直接二分法就可以
+	// 不满足要求 说明有顺序 直接二分法就可以
 	if large >= small {
 		return binarySearch(nums, 0, len(nums)-1, target)
 	}
 
+	// 二分法查询反转位置
 	l, r := 0, len(nums)-1
-	for l < r {
+	for l <= r {
 		mid := (l + r) / 2
 		if nums[mid] <= large { // mid在旋转点右侧
 			r = mid - 1
@@ -34,9 +35,11 @@ func search(nums []int, target int) int {
 		}
 	}
 
-	fmt.Println(l, r)
+	if target >= small {
+		return binarySearch(nums, 0, r, target)
+	}
 
-	return -1
+	return binarySearch(nums, l, len(nums) - 1, target)
 }
 
 func binarySearch(nums []int, l, r int, target int) int {
