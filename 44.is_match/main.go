@@ -7,7 +7,7 @@ func main() {
 }
 //"abbabaaabbabbaababbabbbbbabbbabbbabaaaaababababbbabababaabbababaabbbbbbaaaabababbbaabbbbaabbbbababababbaabbaababaabbbababababbbbaaabbbbbabaaaabbababbbbaababaabbababbbbbababbbabaaaaaaaabbbbbaabaaababaaaabb"
 //"**aa*****ba*a*bb**aa*ab****a*aaaaaa***a*aaaa**bbabb*b*b**aaaaaaaaa*a********ba*bbb***a*ba*bb*bb**a*b*bb"
-
+// 还需要多看，多理解几遍
 // 此题解系官方的贪心题解，为何这种情况下不会超时呢？
 // 核心思路：将p等价为：*v1*v2*.....*vn*和s匹配的问题
 // s中间只要出现v1......vn即可说明匹配成功
