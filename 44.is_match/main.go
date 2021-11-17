@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(isMatch("abbabaaabbabbaababbabbbbbabbbabbbabaaaaababababbbabababaabbababaabbbbbbaaaabababbbaabbbbaabbbbababababbaabbaababaabbbababababbbbaaabbbbbabaaaabbababbbbaababaabbababbbbbababbbabaaaaaaaabbbbbaabaaababaaaabb", "**aa*****ba*a*bb**aa*ab****a*aaaaaa***a*aaaa**bbabb*b*b**aaaaaaaaa*a********ba*bbb***a*ba*bb*bb**a*b*bb"))
+	fmt.Println(isMatch("abbabaaabbabbaababbabbbbbabbbabbbabaaaaababababbbabababaabbababaabbbbbbaaaabababbbaabbbbaabbbbababababbaabbaababaabbbababababbbbaaabbbbbabaaaabbababbbbaababaabbababbbbbababbbabaaaaaaaabbbbbaabaaababaaaabb", "*aa*ba*a*bb*aa*ab*a*aaaaaa*a*aaaa*bbabb*b*b*aaaaaaaaa*a*ba*bbb*a*ba*bb*bb*a*b*bb"))
 }
 //"abbabaaabbabbaababbabbbbbabbbabbbabaaaaababababbbabababaabbababaabbbbbbaaaabababbbaabbbbaabbbbababababbaabbaababaabbbababababbbbaaabbbbbabaaaabbababbbbaababaabbababbbbbababbbabaaaaaaaabbbbbaabaaababaaaabb"
 //"**aa*****ba*a*bb**aa*ab****a*aaaaaa***a*aaaa**bbabb*b*b**aaaaaaaaa*a********ba*bbb***a*ba*bb*bb**a*b*bb"
@@ -20,6 +20,7 @@ func main() {
 //解释: "a" 无法匹配 "aa" 整个字符串。
 
 // 类似第10题的解法，不过递归超时了
+// s的长度会大幅制约算法性能
 func isMatch(s string, p string) bool {
 	// 如果p已经匹配完了，那就判断一下s有没有匹配完
 	if p == "" {
@@ -27,6 +28,14 @@ func isMatch(s string, p string) bool {
 	}
 
 	if p[0] == '*' {
+		// 清洗一下多余的*
+		for i := 0; i < len(p) - 1; i++ {
+			if p[i+1] != '*' {
+				p = p[i:]
+				break
+			}
+		}
+
 		// p为'*' 那分为匹配当前s和不匹配当前s两种结果
 		return (len(s) > 0 && isMatch(s[1:], p)) || isMatch(s, p[1:])
 	}
