@@ -21,6 +21,7 @@ func main() {
 
 // 类似第10题的解法，不过递归超时了
 // s的长度会大幅制约算法性能
+// 死活超时，需要别的办法
 func isMatch(s string, p string) bool {
 	// 如果p已经匹配完了，那就判断一下s有没有匹配完
 	if p == "" {
@@ -33,6 +34,16 @@ func isMatch(s string, p string) bool {
 			if p[i+1] != '*' {
 				p = p[i:]
 				break
+			}
+		}
+
+		// 如果s[0]和p[1]不相同，则为了匹配，必然需要让*吃掉s[0]
+		if len(s) > 0 && len(p) > 1 {
+			for i := 0; i < len(s); i++ {
+				if s[i] == p[1] {
+					s = s[i:]
+					break
+				}
 			}
 		}
 
