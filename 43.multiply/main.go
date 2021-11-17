@@ -27,18 +27,20 @@ func multiply(num1 string, num2 string) string {
 		if num1[i] == '0' { continue }
 		for j := len(num2)-1; j >= 0; j-- {
 			// 0直接跳过
-			if num1[j] == '0' { continue }
+			if num2[j] == '0' { continue }
 
+			// 计算两数字相乘
 			n := (num1[i]-'0') * (num2[j]-'0')
+
 			// 二者相乘再乘以系数
 			var temp strings.Builder
-			if n/10 != 0 {
+			if n >= 10 { // 两个个位数相乘最多两位，避免前导0，单独处理十分位
 				temp.WriteByte(n/10+'0')
 			}
-			if n%10 != 0 {
-				temp.WriteByte(n%10+'0')
-				temp.WriteString(strings.Repeat("0", len(num1)-1-i))
-			}
+			// 处理个位
+			temp.WriteByte(n%10+'0')
+			// 处理位数
+			temp.WriteString(strings.Repeat("0",( len(num1)-1-i)+(len(num2)-1-j)))
 
 			// 做一个字符串加法
 			res = add(res, temp.String())
@@ -48,6 +50,7 @@ func multiply(num1 string, num2 string) string {
 	return res
 }
 
+// add 字符串加法
 func add(n1, n2 string) string {
 	res := ""
 
