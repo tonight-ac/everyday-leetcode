@@ -2,25 +2,23 @@ package main
 
 import "fmt"
 
-//
-
 // 1.
-//[1,2,3] 开始
+//[1,2,3] 待填入 2 3
 //[4,5,6]
 //[7,8,9]
 
 // 2.
-//[1,2,1] 待填入 6 9
+//[1,2,3] 待填入 6 9
 //[4,5,2]
 //[7,8,3]
 
 // 3.
-//[1,2,1] 待填入 8 7
+//[1,2,3] 待填入 8 7
 //[4,5,2]
 //[9,6,3]
 
 // 4.
-//[7,2,1] 待填入 4
+//[7,2,3] 待填入 4 1
 //[8,5,2]
 //[9,6,3]
 
@@ -49,13 +47,12 @@ func rotate(matrix [][]int) {
 		list := make([]*int, 0)
 
 		// 每次两边均缩短一距离
-		for j := i; j < n-i; j++ {
+		for j := i+1; j < n-i; j++ {
 			list = append(list, &matrix[i][j])
 		}
 
 		// 执行上图中第2步操作
-		for j := i; j < n-i; j++ {
-			printL(list)
+		for j := i+1; j < n-i; j++ {
 			list = append(list, &matrix[j][last-i]) // 为之后作准备
 			matrix[j][last-i] = *list[0] // 移动到目标位置
 			list = list[1:] // 将第一个删除
