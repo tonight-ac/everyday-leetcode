@@ -16,7 +16,8 @@ import (
 // 3,0 3,1 3,2 3,3
 
 func main() {
-	fmt.Println(solveNQueens(4))
+	fmt.Println(len(solveNQueens(9)))
+
 }
 
 var uni [4][18]byte
