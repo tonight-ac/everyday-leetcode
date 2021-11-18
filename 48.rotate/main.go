@@ -44,19 +44,23 @@ func rotate(matrix [][]int) {
 	// 只需要处理n/2即可
 	for i := 0; i < n/2; i++ {
 		// 缓冲数组
-		list := make([]*int, 0)
+		list := make([]int, 0)
 
-		// 每次两边均缩短一距离
+		// 执行上图中第1步操作
 		for j := i+1; j < n-i; j++ {
-			list = append(list, &matrix[i][j])
+			list = append(list, matrix[i][j])
 		}
+
+		//fmt.Println(list)
 
 		// 执行上图中第2步操作
 		for j := i+1; j < n-i; j++ {
-			list = append(list, &matrix[j][last-i]) // 为之后作准备
-			matrix[j][last-i] = *list[0] // 移动到目标位置
+			list = append(list, matrix[j][last-i]) // 为之后作准备
+			matrix[j][last-i] = list[0] // 移动到目标位置
 			list = list[1:] // 将第一个删除
 		}
+
+		//fmt.Println(list)
 
 		// 执行上图中第3步操作
 		//for j := last-i; j >= i; j-- {
