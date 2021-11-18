@@ -2,6 +2,17 @@ package main
 
 import "fmt"
 
+
+//输入：matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]
+//输出：[[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]
+
+func main() {
+	//matrix := [][]int{{1,2,3},{4,5,6},{7,8,9}}
+	matrix := [][]int{{5,1,9,11},{2,4,8,10},{13,3,6,7},{15,14,12,16}}
+	rotate(matrix)
+	printM(matrix)
+}
+
 // 1.
 //[1,2,3] 待填入 2 3
 //[4,5,6]
@@ -26,16 +37,6 @@ import "fmt"
 //[7,4,1] 完毕
 //[8,5,2]
 //[9,6,3]
-
-//输入：matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]
-//输出：[[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]
-
-func main() {
-	matrix := [][]int{{1,2,3},{4,5,6},{7,8,9}}
-	rotate(matrix)
-	//printM(matrix)
-}
-
 // 原地旋转填入法
 func rotate(matrix [][]int) {
 	n := len(matrix)
@@ -63,13 +64,29 @@ func rotate(matrix [][]int) {
 		//fmt.Println(list)
 
 		// 执行上图中第3步操作
-		//for j := last-i; j >= i; j-- {
-		//
-		//}
+		for j := last-i-1; j >= i; j-- {
+			list = append(list, matrix[last-i][j])
+			matrix[last-i][j] = list[0]
+			list = list[1:]
+		}
+
+		//fmt.Println(list)
 
 		// 执行上图中第4步操作
+		for j := last-i-1; j >= i; j-- {
+			list = append(list, matrix[j][i])
+			matrix[j][i] = list[0]
+			list = list[1:]
+		}
+
+		//fmt.Println(list)
 
 		// 执行上图中第5步操作
+		for j := i+1; j < n-i; j++ {
+			list = append(list, matrix[i][j])
+			matrix[i][j] = list[0]
+			list = list[1:]
+		}
 	}
 }
 
