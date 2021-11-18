@@ -5,6 +5,7 @@ type ListNode struct {
 	Next *ListNode
 }
 
+// TODO 未完成
 func rotateRight(head *ListNode, k int) *ListNode {
 	// 类似19题，通过快慢指针定位之后，做反转
 	// 区别是k可能大于ListNode总长度
