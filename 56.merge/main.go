@@ -28,22 +28,22 @@ func main() {
 //[[0,5]]
 func merge(intervals [][]int) [][]int {
 	res := make([][]int, 0)
+
 	// 对intervals进行排序，排序规则：按照tuple第0个元素的大小升序排列
 	sort.Slice(intervals, func(i, j int) bool{
 		return intervals[i][0] < intervals[j][0]
 	})
 
-	for i := 0; i < len(intervals); {
-		res = append(res, intervals[i])
-		// 下一个跨到当前的边了
-		if i + 1 < len(intervals) && intervals[i+1][0] <= res[len(res)-1][1] {
-			// 把两个进行合并
-			if intervals[i+1][1] > res[len(res)-1][1] {
-				res[len(res)-1][1] = intervals[i+1][1]
-			}
-			i+=2
-		} else {
-			i++
+	// 先添加一个进去
+	res = append(res, intervals[0])
+
+	for i := 1; i < len(intervals); i++ {
+		if intervals[i][0] > res[len(res)-1][1] {
+			// 没跨到边，直接下一个，不需要合并
+			res = append(res, intervals[i])
+		} else if intervals[i][1] > res[len(res)-1][1] {
+			// 跨上边了，并且是不含与的情况，需要更新右边界
+			res[len(res)-1][1] = intervals[i][1]
 		}
 	}
 
