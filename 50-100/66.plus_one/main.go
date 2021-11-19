@@ -1,5 +1,6 @@
 package main
 
+// 肯定还有更好的办法，这个是传统方案
 func plusOne(digits []int) []int {
 	carry := 1
 	for i := len(digits)-1; carry == 1 && i >= 0; i-- {
