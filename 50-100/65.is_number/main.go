@@ -7,24 +7,66 @@ import (
 func main()  {
 	fmt.Println(isNumber("."))
 }
-
+//输入：
+//".-4"
+//输出：
+//true
+//预期结果：
+//false
 func isNumber(s string) bool {
 	// 先定位首个'e'/'E'
 	// 然后分别对'e'/'E'两侧的数字做判断
 	for i := 0; i < len(s); i++ {
 		if s[i] == 'e' || s[i] == 'E' {
-			return isDigit(s[:i], true) && isDigit(s[i+1:], false)
+			return isFloat(s[:i]) && isInt(s[i+1:])
 		}
 	}
 
-	return isDigit(s, true)
+	return isFloat(s)
 }
+
 // isDigit point表示是否允许小数
-func isDigit(s string, point bool) bool {
+func isFloat(s string) bool {
+	if len(s) == 0 { return false }
 
-	return false
+	idx := 0
+	// 先判断符号
+	if s[idx] == '-' || s[idx] == '+' { idx++ }
+	// 如果只有符号，不是数字
+	if idx == len(s) { return false }
+
+	for ; idx < len(s); idx++ {
+		if s[idx] == '.' {
+			if len(s[:idx]) == 0 {
+				return isInt(s[idx+1:])
+			} else if len(s[idx+1:]) == 0 {
+				return isInt(s[:idx])
+			}
+			return isInt(s[:idx]) && isInt(s[idx+1:])
+		}
+	}
+
+	return isInt(s)
 }
 
+// isDigit point表示是否允许小数
+func isInt(s string) bool {
+	if len(s) == 0 { return false }
+
+	idx := 0
+	// 先判断符号
+	if s[idx] == '-' || s[idx] == '+' { idx++ }
+	// 如果只有符号，不是数字
+	if idx == len(s) { return false }
+
+	for ; idx < len(s); idx++ {
+		if s[idx] < '0' || s[idx] > '9' {
+			return false
+		}
+	}
+
+	return true
+}
 
 
 // TODO 未完成
