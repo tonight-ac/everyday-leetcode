@@ -29,7 +29,8 @@ func rotateRight(head *ListNode, k int) *ListNode {
 		return head
 	}
 
-	// 开始双指针定位
+	// 开始双指针定位，把倒数k个元素，放到开头位置
+
 
 	return nil
 }
