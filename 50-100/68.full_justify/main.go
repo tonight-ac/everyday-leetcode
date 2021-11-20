@@ -9,6 +9,7 @@ import "strings"
 //["This    is    an","of text         "]
 //预期结果：
 //["This    is    an","example  of text","justification.  "]
+// TODO 未完成
 // 先确定分组，再确定' '的个数
 func fullJustify(words []string, maxWidth int) []string {
 	res := make([]string, 0)
