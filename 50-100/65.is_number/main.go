@@ -25,31 +25,36 @@ func isNumber(s string) bool {
 	return isFloat(s)
 }
 
-// isDigit point表示是否允许小数
 func isFloat(s string) bool {
 	if len(s) == 0 { return false }
 
 	idx := 0
 	// 先判断符号
-	if s[idx] == '-' || s[idx] == '+' { idx++ }
+	if s[idx] == '-' || s[idx] == '+' { s = s[1:] }
 	// 如果只有符号，不是数字
-	if idx == len(s) { return false }
+	if len(s) == 0 { return false }
 
 	for ; idx < len(s); idx++ {
 		if s[idx] == '.' {
-			if len(s[:idx]) == 0 {
-				return isInt(s[idx+1:])
+			if len(s[:idx]) == 0 && len(s[idx+1:]) == 0 {
+				return false
+			}else if len(s[:idx]) == 0 {
+				return isUInt(s[idx+1:])
 			} else if len(s[idx+1:]) == 0 {
 				return isInt(s[:idx])
 			}
-			return isInt(s[:idx]) && isInt(s[idx+1:])
+			return isInt(s[:idx]) && isUInt(s[idx+1:])
 		}
 	}
 
 	return isInt(s)
 }
 
-// isDigit point表示是否允许小数
+func isUInt(s string) bool {
+	if s[0] == '-' || s[0] == '+' { return false }
+	return isInt(s)
+}
+
 func isInt(s string) bool {
 	if len(s) == 0 { return false }
 
@@ -68,8 +73,6 @@ func isInt(s string) bool {
 	return true
 }
 
-
-// TODO 未完成
 // 类似第8题 不需要特别精简，可读性第一
 // 下面这种方式未通过，且特殊case太多，漏洞堵不上，换一种方式
 //func isNumber(s string) bool {
