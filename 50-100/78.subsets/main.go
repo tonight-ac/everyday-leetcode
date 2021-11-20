@@ -6,6 +6,7 @@ func main() {
 	fmt.Println(subsets([]int{1,2,3}))
 }
 
+// 内存消耗较大
 var res [][]int
 var n []int
 func subsets(nums []int) [][]int {
