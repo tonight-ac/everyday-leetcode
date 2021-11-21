@@ -5,7 +5,7 @@ import "fmt"
 func main() {
 	fmt.Println(search([]int{1}, 0))
 }
-// TODO 未完成
+
 // 类似33题，只不过允许重复
 func search(nums []int, target int) bool {
 	// 这段是相对于33题新增加的部分
