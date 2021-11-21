@@ -5,8 +5,20 @@ type ListNode struct {
 	Next *ListNode
 }
 
-// 如果跟上一个节点数字相同，当前的节点就直接不要了
+// 如果下一个节点跟当前数字相同，下一节节点删除
 func deleteDuplicates(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil { return head }
 
-	return nil
+	for cur, next := head, head.Next; cur != nil && next != nil; {
+		// 相同则删除next
+		if cur.Val == next.Val {
+			cur.Next = next.Next
+			next = cur.Next
+		} else {
+			cur = cur.Next
+			next = next.Next
+		}
+	}
+
+	return head
 }
