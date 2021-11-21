@@ -3,16 +3,28 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(search([]int{1,0,1,1,1}, 0))
+	fmt.Println(search([]int{1}, 0))
 }
 // TODO 未完成
 // 类似33题，只不过允许重复
 func search(nums []int, target int) bool {
+	// 这段是相对于33题新增加的部分
+ 	if nums[0] == nums[len(nums)-1] { // 如果首尾相等，减枝操作，在33题基础上做一些修改
+		// 保障首尾不相等
+		idx := 0
+		for idx = 0; idx < len(nums)-1; idx++ {
+			if nums[idx] != nums[len(nums)-1] {
+				break
+			}
+		}
+		nums = nums[idx:]
+	}
+
 	// small 必然刚好大于 large
 	small, large := nums[0], nums[len(nums)-1]
 
 	// 不满足要求 说明有顺序 直接二分法就可以
-	if large > small {
+	if large >= small {
 		return binarySearch(nums, 0, len(nums)-1, target)
 	}
 
@@ -27,7 +39,6 @@ func search(nums []int, target int) bool {
 		}
 	}
 
-	fmt.Println(l, r)
 	// 4,5,6,7,0,1,2
 	// r目前指向7 l目前指向0
 
