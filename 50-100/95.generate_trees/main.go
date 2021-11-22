@@ -8,6 +8,7 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
+// TODO 未完成
 func main() {
 	fmt.Println(generateTrees(3))
 }
