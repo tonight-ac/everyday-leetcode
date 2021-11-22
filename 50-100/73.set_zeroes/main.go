@@ -5,7 +5,7 @@ func main() {
 	setZeroes(m)
 }
 
-// TODO 寻找更优的常数空间算法
+// 寻找更优的常数空间算法
 // 常数空间的做法
 // 递归解法，遇到0递归将整行设置为0，如果递归过程中遇到0继续递归
 //func setZeroes(matrix [][]int) {

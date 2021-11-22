@@ -6,7 +6,7 @@ func main() {
 	fmt.Println(combine(1,1))
 }
 
-// TODO 好慢的方法，看有没有快一点的
+// 好慢的方法，看有没有快一点的
 var nn, kk int
 var res [][]int
 var uni [21]bool // 1<= n <= 20 开21空间即可
