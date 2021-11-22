@@ -17,28 +17,37 @@ func exist(board [][]byte, word string) bool {
 
 	uni = make([]int, n*m)
 
-	recursion(0, 0, word)
+	recursion(0, word)
 
 	return false
 }
-
-func recursion(x, y int, s string) bool {
-	if len(s) > 0 && b[x][y] == s[0] { s = s[1:] }
+// 当前匹配，向下递归，不匹配直接扫下一个
+func recursion(idx int, s string) bool {
+	//if len(s) > 0 && b[x][y] == s[0] { s = s[1:] }
 
 	// s匹配完毕
 	if len(s) == 0 { return true }
 
 	// 越界了
 	//if idx >= n*m { return false }
-	//
-	//x, y := idx/m, idx%m
 
-	//flag := false
-	for i := 0; i < len(dir);i++ {
-		xx, yy := x+dir[i][0], y+dir[i][1]
-		if xx >= 0 && xx < n && yy >= 0 && yy < m {
+	x, y := idx/m, idx%m
 
+	if b[x][y] != s[0] {
+		// 继续向下找，首个匹配
+		recursion(idx+1, s)
+	} else {
+		uni[idx] = 1
+		// 当前匹配
+		for i := 0; i < len(dir);i++ {
+			xx, yy := x+dir[i][0], y+dir[i][1]
+			if xx >= 0 && xx < n && yy >= 0 && yy < m {
+				if uni[xx*m+yy] == 0 {
+					recursion(xx*m+yy, s[1:])
+				}
+			}
 		}
+		uni[idx] = 0
 	}
 
 	return false
