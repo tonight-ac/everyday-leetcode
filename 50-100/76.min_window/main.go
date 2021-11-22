@@ -28,7 +28,8 @@ func minWindow(s string, t string) string {
 	}
 
 	// 找到最小子串的启始下标，和最小长度
-	start, idx, min, count := 0, 0, 0, 0
+	idx, min := 0, len(s)
+	start, count := 0, 0
 	for i := 0; i < len(ch); i++ {
 		// 如果大于0，那选择ch[i]没错，贪心算法
 		if m[ch[i]] > 0 {
@@ -39,8 +40,8 @@ func minWindow(s string, t string) string {
 		// 到此匹配上了
 		if count == len(t) {
 			// 记录最小值
-			if min > pos[i]-pos[start] {
-				min = pos[i]-pos[start]
+			if min > pos[i]-pos[start]+1 {
+				min = pos[i]-pos[start]+1
 				idx = start
 			}
 			// 删除第start个
@@ -49,7 +50,6 @@ func minWindow(s string, t string) string {
 			if m[ch[start]] > 0 { count-- }
 			// 移动start到下一个
 			start++
-
 		}
 	}
 
