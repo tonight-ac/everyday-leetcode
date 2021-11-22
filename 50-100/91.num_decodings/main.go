@@ -5,7 +5,7 @@ import "fmt"
 func main() {
 	fmt.Println(numDecodings("1123"))
 }
-
+// TODO 未完成
 // 换一个dp的方式
 func numDecodings(s string) int {
 	dp := make([]int, len(s))
