@@ -37,6 +37,7 @@ func recursion(s []int, idx int) {
 
 	// 如果已经存在了，则必须选择当前元素
 	// 例如[0]2,[1]2,[2]2
+	// 因为上一个存在的话，必然有不存在的case
 	if !uni[n[idx]] {
 		// 不选择
 		recursion(s, idx+1)
