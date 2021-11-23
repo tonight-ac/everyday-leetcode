@@ -9,6 +9,8 @@ type TreeNode struct {
 }
 
 // TODO 未完成
+// 难点：1 如何遍历所有情况 2 如何巧妙的建多个不同的树
+// 对于1 参考98题 对于2 先用数组存起来，最后再建树
 func main() {
 	fmt.Println(generateTrees(3))
 }
