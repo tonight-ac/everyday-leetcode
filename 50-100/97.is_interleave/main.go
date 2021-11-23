@@ -17,6 +17,10 @@ func isInterleave(s1 string, s2 string, s3 string) bool {
 }
 
 func recursion(s1 string, s2 string, s3 string, left, right int) bool {
+	if abs(left-right) > 1 {
+		return false
+	}
+
 	if len(s1) + len(s2) + len(s3) == 0 {
 		return abs(left-right) <= 1
 	}
