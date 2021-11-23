@@ -6,11 +6,14 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-// TODO
 func isValidBST(root *TreeNode) bool {
-	if root == nil { return true }
-	if root.Left != nil && root.Val <= root.Left.Val { return false }
-	if root.Right != nil && root.Val >= root.Right.Val { return false }
+	return recursion(root, nil, nil)
+}
 
-	return isValidBST(root.Left) && isValidBST(root.Right)
+// 左右两个数值判断
+func recursion(n *TreeNode, left, right *int) bool {
+	if n == nil { return true }
+	if left != nil && n.Val <= *left { return false }
+	if right != nil && n.Val >= *right { return false }
+	return recursion(n.Left, left, &n.Val) && recursion(n.Right, &n.Val, right)
 }
