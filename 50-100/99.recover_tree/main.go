@@ -23,13 +23,31 @@ func main() {
 	fmt.Println(1)
 }
 
+
+//   1
+// 2   3
+// 左右两个数值判断
+
+//输入：root = [1,3,null,null,2]
+//输出：[3,1,null,null,2]
+//解释：3 不能是 1 左孩子，因为 3 > 1 。交换 1 和 3 使二叉搜索树有效。
+
+//输入：
+//[146,71,-13,55,null,231,399,321,null,null,null,null,null,-33]
+//输出：
+//[71,321,231,55,null,146,399,-13,null,null,null,null,null,-33]
+//预期结果：
+//[146,71,321,55,null,231,399,-13,null,null,null,null,null,-33]
+
+//输入：root = [3,1,4,null,null,2]
+//输出：[2,1,4,null,null,3]
+//解释：2 不能在 3 的右子树中，因为 2 < 3 。交换 2 和 3 使二叉搜索树有效。
+
 // 借鉴98题
 func recoverTree(root *TreeNode)  {
 	recursion(root, nil, nil)
 }
-//   1
-// 2   3
-// 左右两个数值判断
+
 func recursion(n, left, right *TreeNode) {
 	if n == nil { return }
 	// 先把当前节点和左节点调整
