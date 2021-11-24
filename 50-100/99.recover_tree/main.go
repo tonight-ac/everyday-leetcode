@@ -27,11 +27,14 @@ func main() {
 func recoverTree(root *TreeNode)  {
 	recursion(root, nil, nil)
 }
-
+//   1
+// 2   3
 // 左右两个数值判断
 func recursion(n, left, right *TreeNode) {
 	if n == nil { return }
+	// 先把当前节点和左节点调整
 	if n.Left != nil && n.Left.Val > n.Val { n.Val, n.Left.Val = n.Left.Val, n.Val }
+	// 再把当前节点和右节点调整
 	if n.Right != nil && n.Right.Val < n.Val { n.Val, n.Right.Val = n.Right.Val, n.Val }
 	if left != nil {
 		if n.Val < left.Val {
