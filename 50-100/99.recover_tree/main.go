@@ -83,52 +83,58 @@ func recoverTree(root *TreeNode)  {
 	_ = recursion(root, nil, nil)
 }
 
+// 屈服了，先打平成堆搞一下
 func recursion(n, left, right *TreeNode) *TreeNode {
-	if n == nil { return nil }
-	var n1 *TreeNode
-	if n.Left != nil {
-		n1 = recursion(n.Left, left, n) // 左子树有问题的节点
-
-	}
-	var n2 *TreeNode
-	if n.Right != nil {
-		n2 = recursion(n.Right, n, right) // 右子树有问题的节点
-	}
-
-	if n1 == nil && n2 == nil {
-		if left != nil && n.Val < left.Val { return n }
-		if right != nil && n.Val > right.Val { return n }
-		return nil
-	}
-
-	// 左右子树都有一个有问题，直接交换，根据题目要求，直接交换1
-	if n1 != nil && n2 != nil {
-		n1.Val, n2.Val = n2.Val, n1.Val
-		return nil // 问题已经结局
-	}
-
-	if n1 != nil {
-		// 左边有问题，并且现在就能解决
-		if n1.Val > n.Val {
-			n1.Val, n.Val = n.Val, n1.Val
-			return nil
-		}
-		// 不能解决
-		return n1
-	}
-
-	if n2 != nil {
-		// 右边有问题，并且现在就能解决
-		if n2.Val < n.Val {
-			n2.Val, n.Val = n.Val, n2.Val
-			return nil
-		}
-		// 不能解决
-		return n2
-	}
 
 	return nil
 }
+
+//func recursion(n, left, right *TreeNode) *TreeNode {
+//	if n == nil { return nil }
+//	var n1 *TreeNode
+//	if n.Left != nil {
+//		n1 = recursion(n.Left, left, n) // 左子树有问题的节点
+//
+//	}
+//	var n2 *TreeNode
+//	if n.Right != nil {
+//		n2 = recursion(n.Right, n, right) // 右子树有问题的节点
+//	}
+//
+//	if n1 == nil && n2 == nil {
+//		if left != nil && n.Val < left.Val { return n }
+//		if right != nil && n.Val > right.Val { return n }
+//		return nil
+//	}
+//
+//	// 左右子树都有一个有问题，直接交换，根据题目要求，直接交换1
+//	if n1 != nil && n2 != nil {
+//		n1.Val, n2.Val = n2.Val, n1.Val
+//		return nil // 问题已经结局
+//	}
+//
+//	if n1 != nil {
+//		// 左边有问题，并且现在就能解决
+//		if n1.Val > n.Val {
+//			n1.Val, n.Val = n.Val, n1.Val
+//			return nil
+//		}
+//		// 不能解决
+//		return n1
+//	}
+//
+//	if n2 != nil {
+//		// 右边有问题，并且现在就能解决
+//		if n2.Val < n.Val {
+//			n2.Val, n.Val = n.Val, n2.Val
+//			return nil
+//		}
+//		// 不能解决
+//		return n2
+//	}
+//
+//	return nil
+//}
 
 // 借鉴98题
 // 先整理一下顺序
