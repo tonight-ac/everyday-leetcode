@@ -31,24 +31,18 @@ func recoverTree(root *TreeNode)  {
 // 左右两个数值判断
 func recursion(n, left, right *TreeNode) {
 	if n == nil { return }
-	if n.Left != nil && n.Right != nil {
-		if n.Left.Val > n.Right.Val {
-			n.Left.Val ,n.Right.Val = n.Right.Val, n.Left.Val
-		}
-	}
+	if n.Left != nil && n.Left.Val > n.Val { n.Val, n.Left.Val = n.Left.Val, n.Val }
+	if n.Right != nil && n.Right.Val < n.Val { n.Val, n.Right.Val = n.Right.Val, n.Val }
 	if left != nil {
 		if n.Val < left.Val {
 			n.Val, left.Val = left.Val, n.Val
-			//return
 		}
 	}
-	recursion(n.Left, left, n)
 	if right != nil {
 		if n.Val > right.Val {
 			n.Val, right.Val = right.Val, n.Val
-			//return
 		}
 	}
+	recursion(n.Left, left, n)
 	recursion(n.Right, n, right)
-
 }
