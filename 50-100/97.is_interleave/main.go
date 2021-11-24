@@ -1,11 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 //"cacbbbaaabbacbbbbabbcaccccabaaacacbcaacababbaabbaccacbaabac"
 //"cbcccabbbbaaacbaccbabaabbccbbbabacbaacccbbcaabaabbbcbcbab"
 //"ccbcccacbabbbbbbaaaaabbaaccbabbbbacbcbcbaacccbacabbaccbaaabcacbbcabaabacbbcaacaccbbacaabababaabbbaccbbcacbbacabbaacb"
+//"aabcc"
+//"dbbca"
+//"aadbbbaccc"
 func main() {
-	fmt.Println(isInterleave("aabcc", "dbbca", "aadbcbbcac"))
+	fmt.Println(isInterleave("aabcc", "dbbca", "aadbbbaccc"))
 }
 
 var temp []string
@@ -18,6 +24,10 @@ func isInterleave(s1 string, s2 string, s3 string) bool {
 		s1, s2 = s2, s1
 	}
 
+	temp = make([]string, 0)
+
+	recursion(s1, s3, make([]string, 0))
+
 	// 将所有可能和s2进行比较
 	for _, v := range temp {
 		if v == s2 {
@@ -28,22 +38,28 @@ func isInterleave(s1 string, s2 string, s3 string) bool {
 	return false
 }
 
-//func recursion(s1, s3 string, s []string) {
-//	start := 0
-//	for i, j := 0, 0; i < len(s1) && j < len(s3); {
-//		if s1[i] != s3[j] {
-//			start = j+1
-//		} else {
-//			// 把s1匹配的部分切掉
-//			//recursion(s1[:i], )
-//			i++
-//			j++
-//		}
-//		//if ok := recursion(s1[i+1:], s2, s3[i+1:], left+1, right); ok {
-//		//	return true
-//		//}
-//	}
-//}
+func recursion(s1, s3 string, s []string) {
+	// s1匹配完毕了，把结果保存后返回
+	if len(s1) == 0 {
+		temp = append(temp, strings.Join(s, "")+s3)
+		return
+	}
+
+	// s3也为空了，返回，不然会越界
+	if len(s3) == 0 {
+		return
+	}
+
+	if s1[0] == s3[0] {
+		// 相等并匹配
+		recursion(s1[1:], s3[1:], s)
+		// 相等但不让s1匹配，跳过
+		recursion(s1, s3[1:], append(s, s3[0:1]))
+	} else {
+		// 不相等，直接跳过
+		recursion(s1, s3[1:], append(s, s3[0:1]))
+	}
+}
 
 // 改dp试一下
 //func isInterleave(s1 string, s2 string, s3 string) bool {
