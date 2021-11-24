@@ -16,7 +16,8 @@ import (
 //输入：s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac"
 //输出：true
 func main() {
-	fmt.Println(isInterleave("cacbbbaaabbacbbbbabbcaccccabaaacacbcaacababbaabbaccacbaabac", "cbcccabbbbaaacbaccbabaabbccbbbabacbaacccbbcaabaabbbcbcbab", "ccbcccacbabbbbbbaaaaabbaaccbabbbbacbcbcbaacccbacabbaccbaaabcacbbcabaabacbbcaacaccbbacaabababaabbbaccbbcacbbacabbaacb"))
+	fmt.Println(isInterleave("abbbbbbcabbacaacccababaabcccabcacbcaabbbacccaaaaaababbbacbb", "ccaacabbacaccacababbbbabbcacccacccccaabaababacbbacabbbbabc", "cacbabbacbbbabcbaacbbaccacaacaacccabababbbababcccbabcabbaccabcccacccaabbcbcaccccaaaaabaaaaababbbbacbbabacbbacabbbbabc"))
+	//fmt.Println(isInterleave("cacbbbaaabbacbbbbabbcaccccabaaacacbcaacababbaabbaccacbaabac", "cbcccabbbbaaacbaccbabaabbccbbbabacbaacccbbcaabaabbbcbcbab", "ccbcccacbabbbbbbaaaaabbaaccbabbbbacbcbcbaacccbacabbaccbaaabcacbbcabaabacbbcaacaccbbacaabababaabbbaccbbcacbbacabbaacb"))
 	//fmt.Println(isInterleave("aabcc", "dbbca", "aadbbcbcac"))
 }
 
@@ -70,7 +71,9 @@ func recursion(s1, s3 string, s []string) {
 		// 相等并匹配
 		recursion(s1[1:], s3[1:], s)
 		// 相等但不让s1匹配，跳过
-		recursion(s1, s3[1:], append(s, s3[0:1]))
+		if len(s) != len(ss) && ss[len(s)] == s3[0] { //
+			recursion(s1, s3[1:], append(s, s3[0:1]))
+		}
 	} else {
 		// 不相等，直接跳过
 		recursion(s1, s3[1:], append(s, s3[0:1]))
