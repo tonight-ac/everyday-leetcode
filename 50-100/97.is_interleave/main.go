@@ -4,17 +4,24 @@ import (
 	"fmt"
 	"strings"
 )
+//"abbbbbbcabbacaacccababaabcccabcacbcaabbbacccaaaaaababbbacbb"
+//"ccaacabbacaccacababbbbabbcacccacccccaabaababacbbacabbbbabc"
+//"cacbabbacbbbabcbaacbbaccacaacaacccabababbbababcccbabcabbaccabcccacccaabbcbcaccccaaaaabaaaaababbbbacbbabacbbacabbbbabc"
 //"cacbbbaaabbacbbbbabbcaccccabaaacacbcaacababbaabbaccacbaabac"
 //"cbcccabbbbaaacbaccbabaabbccbbbabacbaacccbbcaabaabbbcbcbab"
 //"ccbcccacbabbbbbbaaaaabbaaccbabbbbacbcbcbaacccbacabbaccbaaabcacbbcabaabacbbcaacaccbbacaabababaabbbaccbbcacbbacabbaacb"
 //"aabcc"
 //"dbbca"
 //"aadbbbaccc"
+//输入：s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac"
+//输出：true
 func main() {
-	fmt.Println(isInterleave("aabcc", "dbbca", "aadbbbaccc"))
+	fmt.Println(isInterleave("cacbbbaaabbacbbbbabbcaccccabaaacacbcaacababbaabbaccacbaabac", "cbcccabbbbaaacbaccbabaabbccbbbabacbaacccbbcaabaabbbcbcbab", "ccbcccacbabbbbbbaaaaabbaaccbabbbbacbcbcbaacccbacabbaccbaaabcacbbcabaabacbbcaacaccbbacaabababaabbbaccbbcacbbacabbaacb"))
+	//fmt.Println(isInterleave("aabcc", "dbbca", "aadbbcbcac"))
 }
 
 var temp []string
+var ss string
 // 先对于更短的串和混合串进行匹配拆解，将空出来的所有可能拼接然后和长串进行比较
 func isInterleave(s1 string, s2 string, s3 string) bool {
 	if len(s1) + len(s2) != len(s3) { return false }
@@ -26,7 +33,11 @@ func isInterleave(s1 string, s2 string, s3 string) bool {
 
 	temp = make([]string, 0)
 
+	ss = s2
+
 	recursion(s1, s3, make([]string, 0))
+
+	//fmt.Println(temp)
 
 	// 将所有可能和s2进行比较
 	for _, v := range temp {
@@ -47,6 +58,11 @@ func recursion(s1, s3 string, s []string) {
 
 	// s3也为空了，返回，不然会越界
 	if len(s3) == 0 {
+		return
+	}
+
+	// 关键性剪枝操作
+	if !strings.HasPrefix(ss, strings.Join(s, "")) {
 		return
 	}
 
