@@ -10,6 +10,7 @@ func main() {
 	fmt.Println(maximalRectangle(matrix))
 }
 
+// 这不是dp，这是一个妥妥的搜索
 func maximalRectangle(matrix [][]byte) int {
 	if len(matrix) == 0 || len(matrix[0]) == 0 {
 		return 0
