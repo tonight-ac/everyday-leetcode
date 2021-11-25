@@ -42,6 +42,7 @@ func maximalRectangle(matrix [][]byte) int {
 			} else {
 				// 左边和上边都是可以的
 				dp[j] = dp[j-1] && dp[j-m]
+				if !dp[i] { break } //
 			}
 			if temp := (y1-x1+1)*(y2-x2+1); dp[j] && res < temp {
 				res = temp
