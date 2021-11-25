@@ -77,6 +77,34 @@ func main() {
 	recoverTree(root)
 }
 
+// 堆不行
+// 先存储成堆的形式
+// 修正错误
+// 再恢复回去
+//var temp []*TreeNode
+//func recoverTree(root *TreeNode) {
+//	// [1, 10^4]
+//	temp = make([]*TreeNode, 10000)
+//
+//	// 把树打平成数组
+//	treeToHeap(root, 0)
+//
+//	// 修复数据
+//
+//}
+//
+//func treeToHeap(root *TreeNode, idx int) {
+//	if root == nil {
+//		return
+//	}
+//	temp[idx] = root
+//	treeToHeap(root.Left, idx*2+1)
+//	treeToHeap(root.Right, idx*2+2)
+//}
+//
+//func headToTree() {
+//
+//}
 func recoverTree(root *TreeNode)  {
 	var nums []int
 	var inorder func(node *TreeNode)
