@@ -18,9 +18,6 @@ func maximalRectangle(matrix [][]byte) int {
 	n, m := len(matrix), len(matrix[0])
 	size := n*m
 
-
-	//for i := 0; i < size; i++ { dp[i] = make([]bool, size) }
-
 	res := 0
 
 	for i := 0; i < size; i++ {
@@ -30,10 +27,10 @@ func maximalRectangle(matrix [][]byte) int {
 		dp := make([]bool, size)
 		for j := i; j < size; j++ {
 			y1, y2 := j/m, j%m
-			// 0不能做右下角
-			if matrix[y1][y2] == '0' { continue }
 			// 矩形面积需要为正
 			if y2 < x2 { continue }
+			// 0不能做右下角
+			if matrix[y1][y2] == '0' { continue }
 			if x1 == y1 && x2 == y2 {
 				// 相同节点，判断是否等于1
 				dp[j] = true
