@@ -5,12 +5,12 @@ import "fmt"
 
 
 func main() {
-	matrix := [][]byte{{'0','0','0','0','0','0','1'},{'0','0','0','0','1','1','1'},{'1','1','1','1','1','1','1'},{'0','0','0','1','1','1','1'}}
-	//matrix := [][]byte{{'1','0','1','0','0'},{'1','0','1','1','1'},{'1','1','1','1','1'},{'1','0','0','1','0'}}
+	//matrix := [][]byte{{'0','0','0','0','0','0','1'},{'0','0','0','0','1','1','1'},{'1','1','1','1','1','1','1'},{'0','0','0','1','1','1','1'}}
+	matrix := [][]byte{{'1','0','1','0','0'},{'1','0','1','1','1'},{'1','1','1','1','1'},{'1','0','0','1','0'}}
 	fmt.Println(maximalRectangle(matrix))
 }
 
-// 这不是dp，这是一个妥妥的搜索
+// 在搜索的基础上做一下剪枝
 func maximalRectangle(matrix [][]byte) int {
 	if len(matrix) == 0 || len(matrix[0]) == 0 { return 0 }
 
@@ -24,34 +24,77 @@ func maximalRectangle(matrix [][]byte) int {
 		// 0不能做左上角
 		if matrix[x1][x2] == '0' { continue }
 		dp := make([]bool, size)
-		for j := i; j < size; j++ {
-			y1, y2 := j/m, j%m
-			// 矩形面积需要为正
-			if y2 < x2 { continue }
-			// 0不能做右下角
-			if matrix[y1][y2] == '0' { continue }
-			if x1 == y1 && x2 == y2 {
-				// 相同节点，判断是否等于1
-				dp[j] = true
-			} else if x1 == y1 {
-				// 同一行
-				dp[j] = dp[j-1]
-			} else if x2 == y2 {
-				// 同一列
-				dp[j] = dp[j-m]
-			} else {
-				// 左边和上边都是可以的
-				dp[j] = dp[j-1] && dp[j-m]
-				if !dp[i] { break } //
-			}
-			if temp := (y1-x1+1)*(y2-x2+1); dp[j] && res < temp {
-				res = temp
+		for y1 := x1; y1 < n; y1++ {
+			for y2 := x2; y2 < m; y2++ {
+				// 0不能做右下角
+				if matrix[y1][y2] == '0' { continue }
+				j := y1*m+y2
+				if x1 == y1 && x2 == y2 {
+					// 相同节点，判断是否等于1
+					dp[j] = true
+				} else if x1 == y1 {
+					// 同一行
+					dp[j] = dp[j-1]
+				} else if x2 == y2 {
+					// 同一列
+					dp[j] = dp[j-m]
+				} else {
+					// 左边和上边都是可以的
+					dp[j] = dp[j-1] && dp[j-m]
+					if !dp[i] { break } //
+				}
+				if temp := (y1-x1+1)*(y2-x2+1); dp[j] && res < temp {
+					res = temp
+				}
 			}
 		}
 	}
 
 	return res
 }
+
+//// 这不是dp，这是一个妥妥的搜索
+//func maximalRectangle(matrix [][]byte) int {
+//	if len(matrix) == 0 || len(matrix[0]) == 0 { return 0 }
+//
+//	n, m := len(matrix), len(matrix[0])
+//	size := n*m
+//
+//	res := 0
+//
+//	for i := 0; i < size; i++ {
+//		x1, x2 := i/m, i%m
+//		// 0不能做左上角
+//		if matrix[x1][x2] == '0' { continue }
+//		dp := make([]bool, size)
+//		for j := i; j < size; j++ {
+//			y1, y2 := j/m, j%m
+//			// 矩形面积需要为正
+//			if y2 < x2 { continue }
+//			// 0不能做右下角
+//			if matrix[y1][y2] == '0' { continue }
+//			if x1 == y1 && x2 == y2 {
+//				// 相同节点，判断是否等于1
+//				dp[j] = true
+//			} else if x1 == y1 {
+//				// 同一行
+//				dp[j] = dp[j-1]
+//			} else if x2 == y2 {
+//				// 同一列
+//				dp[j] = dp[j-m]
+//			} else {
+//				// 左边和上边都是可以的
+//				dp[j] = dp[j-1] && dp[j-m]
+//				if !dp[i] { break } //
+//			}
+//			if temp := (y1-x1+1)*(y2-x2+1); dp[j] && res < temp {
+//				res = temp
+//			}
+//		}
+//	}
+//
+//	return res
+//}
 
 // 这个方法在下面这个case中失效了
 // 不能堵漏洞，换一个思路
