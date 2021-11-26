@@ -9,66 +9,93 @@ func main() {
 	fmt.Println(maximalRectangle(matrix))
 }
 
+//class Solution {
+//public int maximalRectangle(char[][] matrix) {
+//if (matrix.length == 0)
+//return 0;
+//
+//int m = matrix.length, n = matrix[0].length, area = 0, min;
+//int[][][] dp = new int[m + 1][n + 1][2];
+//for (int i = 1; i <= m; i++) {
+//for (int j = 1; j <= n; j++) {
+//if (matrix[i - 1][j - 1] == '1') {
+//if (j != 1 && matrix[i - 1][j - 2] == '1')
+//dp[i][j][0] = dp[i][j - 1][0] + 1;
+//else
+//dp[i][j][0] = 1;
+//
+//if (i != 1 && matrix[i - 2][j - 1] == '1')
+//dp[i][j][1] = dp[i - 1][j][1] + 1;
+//else
+//dp[i][j][1] = 1;
+//
+//min = dp[i][j][0];
+//for (int k = 1; k <= dp[i][j][1]; k++) {
+//min = Math.min(min, dp[i - k + 1][j][0]);
+//area = Math.max(area, min * k);
+//}
+//}
+//}
+//}
+//
+//return area;
+//}
+//}
+// 讨论区递归方案
+// 跟我思路一样，这个刚刚能过
 func maximalRectangle(matrix [][]byte) int {
-	if len(matrix) == 0 || len(matrix[0]) == 0 { return 0 }
+	if len(matrix) == 0 { return 0 }
 
-	n, m := len(matrix), len(matrix[0])
+	m, n := len(matrix), len(matrix[0])
 
-	dp := make(map[int][]int)
+	area, mm := 0, 0
 
-	if matrix[0][0] == '1' { dp[0] = []int{0} }
-
-	for i := 1; i < n; i++ {
-		if matrix[i][0] == '0' { continue }
-		dp[i*m] = append([]int{i*m}, dp[(i-1)*m]...)
+	dp := make([][][]int, m + 1)
+	for i := 0; i < len(dp); i++ {
+		dp[i] = make([][]int, n + 1)
+		for j := 0; j < len(dp[i]); j++ {
+			dp[i][j] = make([]int, 2)
+		}
 	}
 
-	for i := 1; i < m; i++ {
-		if matrix[0][i] == '0' { continue }
-		dp[i] = append([]int{i}, dp[i-1]...)
-	}
+	// 遍历
+	for i := 1; i <= m; i++ {
+		for j := 1; j <= n; j++ {
 
-	//{
-	//{'1','0','1','0','0'},
-	//{'1','0','1','1','1'},
-	//{'1','1','1','1','1'},
-	//{'1','0','0','1','0'}
-	//}
-
-	for i := 1; i < n; i++ {
-		for j := 1; j < m; j++ {
-			if matrix[i][j] == '0' { continue }
-			idx := i*m+j
-			dp[idx] = append(make([]int, 0), idx)
-			row := dp[idx-1]
-			clo := dp[idx-m]
-			if len(row) != 0 && len(clo) != 0 {
-				for k := 0; k < len(row); k++ {
-					for l := 0; l < len(clo); l++ {
-						dp[idx] = append(dp[idx], min(row[k]/m, clo[l]/m)*m+min(row[k]%m, clo[l]%m))
-					}
+			if matrix[i - 1][j - 1] == '1' {
+				if j != 1 && matrix[i - 1][j - 2] == '1' {
+					dp[i][j][0] = dp[i][j - 1][0] + 1 // 列向上延伸+1
+				} else {
+					dp[i][j][0] = 1 // 初始化自己
 				}
-			} else if len(row) != 0 {
-				dp[idx] = append(dp[idx], row...)
-			} else if len(clo) != 0 {
-				dp[idx] = append(dp[idx], clo...)
+
+				if i != 1 && matrix[i - 2][j - 1] == '1' {
+					dp[i][j][1] = dp[i - 1][j][1] + 1 // 行向左延伸+1
+				} else {
+					dp[i][j][1] = 1 // 初始化自己
+				}
+
+				//
+				mm = dp[i][j][0]
+
+				// 关键步骤，这里我没想通，所以我自己没有通过
+				for k := 1; k <= dp[i][j][1]; k++ {
+					mm = min(mm, dp[i - k + 1][j][0]) // 沿着自己列向上的方向，遍历他们的向左最小行
+					// 最小行求和
+					area = max(area, mm * k)
+				}
 			}
 		}
 	}
 
-	res := 0
+	return area
+}
 
-	for k, v := range dp {
-		for i := 0; i < len(v); i++ {
-			x1, x2 := v[i]/m, v[i]%m
-			y1, y2 := k/m, k%m
-			if temp := (y1-x1+1)*(y2-x2+1); res < temp {
-				res = temp
-			}
-		}
+func max(a, b int) int {
+	if a > b {
+		return a
 	}
-
-	return res
+	return b
 }
 
 func min(a, b int) int {
@@ -77,6 +104,74 @@ func min(a, b int) int {
 	}
 	return b
 }
+//func maximalRectangle(matrix [][]byte) int {
+//	if len(matrix) == 0 || len(matrix[0]) == 0 { return 0 }
+//
+//	n, m := len(matrix), len(matrix[0])
+//
+//	dp := make(map[int][]int)
+//
+//	if matrix[0][0] == '1' { dp[0] = []int{0} }
+//
+//	for i := 1; i < n; i++ {
+//		if matrix[i][0] == '0' { continue }
+//		dp[i*m] = append([]int{i*m}, dp[(i-1)*m]...)
+//	}
+//
+//	for i := 1; i < m; i++ {
+//		if matrix[0][i] == '0' { continue }
+//		dp[i] = append([]int{i}, dp[i-1]...)
+//	}
+//
+//	//{
+//	//{'1','0','1','0','0'},
+//	//{'1','0','1','1','1'},
+//	//{'1','1','1','1','1'},
+//	//{'1','0','0','1','0'}
+//	//}
+//
+//	for i := 1; i < n; i++ {
+//		for j := 1; j < m; j++ {
+//			if matrix[i][j] == '0' { continue }
+//			idx := i*m+j
+//			dp[idx] = append(make([]int, 0), idx)
+//			row := dp[idx-1]
+//			clo := dp[idx-m]
+//			if len(row) != 0 && len(clo) != 0 {
+//				for k := 0; k < len(row); k++ {
+//					for l := 0; l < len(clo); l++ {
+//						dp[idx] = append(dp[idx], min(row[k]/m, clo[l]/m)*m+min(row[k]%m, clo[l]%m))
+//					}
+//				}
+//			} else if len(row) != 0 {
+//				dp[idx] = append(dp[idx], row...)
+//			} else if len(clo) != 0 {
+//				dp[idx] = append(dp[idx], clo...)
+//			}
+//		}
+//	}
+//
+//	res := 0
+//
+//	for k, v := range dp {
+//		for i := 0; i < len(v); i++ {
+//			x1, x2 := v[i]/m, v[i]%m
+//			y1, y2 := k/m, k%m
+//			if temp := (y1-x1+1)*(y2-x2+1); res < temp {
+//				res = temp
+//			}
+//		}
+//	}
+//
+//	return res
+//}
+//
+//func min(a, b int) int {
+//	if a < b {
+//		return a
+//	}
+//	return b
+//}
 
 // 在搜索的基础上做一下剪枝
 //func maximalRectangle(matrix [][]byte) int {
