@@ -9,6 +9,7 @@ func main() {
 	fmt.Println(largestRectangleArea([]int{2,1,5,6,2,3}))
 }
 
+// 这是人能想出来的吗？
 // 从暴力法能不能衍生出什么思考？
 func largestRectangleArea(heights []int) int {
 	// 这里为了代码简便，在柱体数组的头和尾加了两个高度为 0 的柱体。
