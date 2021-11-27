@@ -1,12 +1,6 @@
 package main
 
-import (
-	"fmt"
-)
-
-func main() {
-	fmt.Println(isScramble("abc", "cba"))
-}
+import "fmt"
 
 // 需要自底向上搜索
 //var tar string
@@ -36,6 +30,11 @@ func main() {
 //"ccabcbabcbabbbbcbb"
 //"bbbbabccccbbbabcba"
 // 自顶向下搜索是不可以的
+
+func main() {
+	fmt.Println(isScramble("abc", "cba"))
+}
+
 func isScramble(s1 string, s2 string) bool {
 	if s1 == s2 { return true }
 
