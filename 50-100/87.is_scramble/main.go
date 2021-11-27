@@ -32,33 +32,45 @@ import "fmt"
 // 自顶向下搜索是不可以的
 
 func main() {
-	fmt.Println(isScramble("abcdbdacbdac", "bdacabcdbdac"))
+	fmt.Println(isScramble("abcde", "caebd"))
 }
 
 // 用一个栈解决，借鉴了84的思路
 // 不是所有题都需要用dp，很多时候向前搜索都需要用到栈
-//"abcdbdacbdac"
-//"bdacabcdbdac"
+//"abcde"
+//"caebd"
 func isScramble(s1 string, s2 string) bool {
-	stack := make([]string, 0)
+	stack := make([]byte, 0)
 	i, j := 0, 0
 	for i < len(s1) && j < len(s2) {
 		if s1[i] == s2[j] {
 			i++
 			j++
-		} else if len(stack) != 0 && stack[len(stack)-1] == string(rune(s2[j])) {
-			// 匹配出栈
-			stack = stack[:len(stack)-1]
-			j++
-		} else {
-			stack = append(stack, string(rune(s1[i])))
-			i++
+			continue
+		} else if len(stack) != 0 {
+			if stack[len(stack)-1] == s2[j] {
+				// 尾部
+				stack = stack[:len(stack)-1]
+				j++
+				continue
+			} else if stack[0] == s2[j] {
+				// 头部
+				stack = stack[1:]
+				j++
+				continue
+			}
 		}
+
+		stack = append(stack, s1[i])
+		i++
 	}
 
 	for len(stack) != 0 && j < len(s2) {
-		if stack[len(stack)-1] == string(rune(s2[j])) {
+		if stack[len(stack)-1] == s2[j] {
 			stack = stack[:len(stack)-1]
+			j++
+		} else if stack[0] == s2[j] {
+			stack = stack[1:]
 			j++
 		} else {
 			return false
