@@ -45,7 +45,7 @@ func isScramble(s1 string, s2 string) bool {
 		if ok := isScramble(s1[:i], s2[:i]) && isScramble(s1[i:], s2[i:]); ok {
 			return true
 		}
-		// 交换 存在长度不想等的情况
+		// 交换
 		if ok := isScramble(s1[i:], s2[:len(s2)-i]) && isScramble(s1[:i], s2[len(s2)-i:]); ok {
 			return true
 		}
