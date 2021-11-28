@@ -6,17 +6,19 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-var res int
+// 另一种办法
 func maxDepth(root *TreeNode) int {
-	res = 0
-
-	if root == nil { return res }
-
-	recursion(root, 1)
-
-	return res
+	if root == nil { return 0 }
+	return max(maxDepth(root.Left), maxDepth(root.Right))+1
 }
 
+func max(a, b int) int {
+	if a > b { return a }
+	return b
+}
+
+// 其中一种办法
+var res int
 func recursion(root *TreeNode, depth int) {
 	if res < depth { res = depth }
 
@@ -27,3 +29,4 @@ func recursion(root *TreeNode, depth int) {
 		recursion(root.Right, depth+1)
 	}
 }
+
