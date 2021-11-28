@@ -104,14 +104,26 @@ func main() {
 
 // 又超时了nm的
 var m1, m2 [][]string
+var dp [][][][]*bool
 func isScramble(s1 string, s2 string) bool {
-	ss1, ss2 = s1, s2
 	//[
 	//[10000000000000000000000000 11000000000000000000000000 11100000000000000000000000 11110000000000000000000000]
 	//[ 01000000000000000000000000 01100000000000000000000000 01110000000000000000000000]
 	//[  00100000000000000000000000 00110000000000000000000000]
 	//[   00010000000000000000000000]
 	//]
+
+	n := len(s1)
+	dp = make([][][][]*bool, n)
+	for i := 0; i < n; i++ {
+		dp[i] = make([][][]*bool, n)
+		for j := 0; j < n; j++ {
+			dp[i][j] = make([][]*bool, n)
+			for k := 0; k < n; k++ {
+				dp[i][j][k] = make([]*bool, n)
+			}
+		}
+	}
 
 	m1 = make([][]string, len(s1))
 	for i := 0; i < len(s1); i++ {
@@ -144,6 +156,7 @@ func isScramble(s1 string, s2 string) bool {
 // 0
 // 搞一个记忆化搜索
 func recursion(i1, j1, i2, j2 int) bool {
+	if dp[i1][j1][i2][j2] != nil { return *dp[i1][j1][i2][j2] }
 	if i1 == j1 && i2 == j2 {
 		return m1[i1][j1] == m2[i2][j2]
 	}
@@ -151,15 +164,29 @@ func recursion(i1, j1, i2, j2 int) bool {
 	for i := 0; i < j1-i1; i++ {
 		// 不交换
 		if m1[i1][i1+i] == m2[i2][i2+i] && m1[i1+i+1][j1] == m2[i2+i+1][j2] {
-			if ok := recursion(i1, i1+i, i2, i2+i) && recursion(i1+i+1, j1, i2+i+1, j2); ok {
+			ok1 := recursion(i1, i1+i, i2, i2+i)
+			dp[i1][i1+i][i2][i2+i] = &ok1
+			ok2 := recursion(i1+i+1, j1, i2+i+1, j2)
+			dp[i1+i+1][j1][i2+i+1][j2] = &ok2
+			if ok1 && ok2 {
 				return true
 			}
+			//if ok := recursion(i1, i1+i, i2, i2+i) && recursion(i1+i+1, j1, i2+i+1, j2); ok {
+			//	return true
+			//}
 		}
 		// 交换
 		if m1[i1][i1+i] == m2[j2-i][j2] && m1[i1+i+1][j1] == m2[i2][j2-i-1] {
-			if ok := recursion(i1, i1+i, j2-i, j2) && recursion(i1+i+1, j1, i2, j2-i-1); ok {
+			ok1 := recursion(i1, i1+i, j2-i, j2)
+			dp[i1][i1+i][j2-i][j2] = &ok1
+			ok2 := recursion(i1+i+1, j1, i2, j2-i-1)
+			dp[i1+i+1][j1][i2][j2-i-1] = &ok2
+			if ok1 && ok2 {
 				return true
 			}
+			//if ok := recursion(i1, i1+i, j2-i, j2) && recursion(i1+i+1, j1, i2, j2-i-1); ok {
+			//	return true
+			//}
 		}
 	}
 
