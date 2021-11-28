@@ -5,8 +5,7 @@ type TreeNode struct {
 	Left *TreeNode
 	Right *TreeNode
 }
-// TODO 未完成
-// 超时了
+
 // 借用104
 var balanced bool
 func isBalanced(root *TreeNode) bool {
@@ -19,8 +18,10 @@ func isBalanced(root *TreeNode) bool {
 
 func recursion(root *TreeNode) int {
 	if root == nil { return 0 }
-	if abs(recursion(root.Left) - recursion(root.Right)) > 1 { balanced = false }
-	return max(recursion(root.Left), recursion(root.Right))+1
+	left := recursion(root.Left)
+	right := recursion(root.Right)
+	if abs(left - right) > 1 { balanced = false }
+	return max(left, right)+1
 }
 
 func abs(a int) int {
