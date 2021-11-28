@@ -105,6 +105,7 @@ func main() {
 // 又超时了nm的
 var m1, m2 [][]string
 func isScramble(s1 string, s2 string) bool {
+	ss1, ss2 = s1, s2
 	//[
 	//[10000000000000000000000000 11000000000000000000000000 11100000000000000000000000 11110000000000000000000000]
 	//[ 01000000000000000000000000 01100000000000000000000000 01110000000000000000000000]
@@ -142,8 +143,6 @@ func isScramble(s1 string, s2 string) bool {
 // 0 1 0 1
 // 0
 // 搞一个记忆化搜索
-// 把结果存储起来
-// 首先j1-i1==j2-i2
 func recursion(i1, j1, i2, j2 int) bool {
 	if i1 == j1 && i2 == j2 {
 		return m1[i1][j1] == m2[i2][j2]
@@ -177,7 +176,7 @@ func hash(s string) string {
 
 	var b strings.Builder
 	for _, v := range list {
-		b.WriteByte(v+'0')
+		b.WriteByte(v)
 	}
 
 	return b.String()
