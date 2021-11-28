@@ -7,6 +7,15 @@ type TreeNode struct {
 }
 
 func sortedArrayToBST(nums []int) *TreeNode {
-
-	return nil
+	if len(nums) == 0 { return nil }
+	if len(nums) == 1 {
+		return &TreeNode{
+			Val: nums[0],
+		}
+	}
+	return &TreeNode{
+		Val: nums[len(nums)/2],
+		Left: sortedArrayToBST(nums[:len(nums)/2]),
+		Right: sortedArrayToBST(nums[len(nums)/2+1:]),
+	}
 }
