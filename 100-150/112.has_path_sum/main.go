@@ -6,6 +6,13 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
+//输入：
+//[5,4,8,11,null,13,4,7,2,null,null,null,1]
+//22
+//输出：
+//false
+//预期结果：
+//true
 // TODO
 func hasPathSum(root *TreeNode, targetSum int) bool {
 	if root == nil { return false }
