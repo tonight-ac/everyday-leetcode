@@ -11,22 +11,21 @@ type Node struct {
 func connect(root *Node) *Node {
 	if root == nil { return nil }
 
-	connectTwo(root.Left, root.Right)
+	connectThem([]*Node{root})
 
 	return root
 }
 
-func connectTwo(one, two *Node) {
-	if one != nil {
-		one.Next = two
-		connectTwo(one.Left, one.Right)
+// 换一种方式
+func connectThem(them []*Node) {
+	if len(them) == 0 { return }
+	next := make([]*Node, 0)
+	for i := 0; i < len(them); i++ {
+		if i + 1 < len(them) {
+			them[i].Next = them[i+1]
+		}
+		if them[i].Left != nil { next = append(next, them[i].Left) }
+		if them[i].Right != nil { next = append(next, them[i].Right) }
 	}
-
-	if two != nil {
-		connectTwo(two.Left, two.Right)
-	}
-
-	if one != nil && two != nil {
-		connectTwo(one.Right, two.Left)
-	}
+	connectThem(next)
 }

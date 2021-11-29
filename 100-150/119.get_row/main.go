@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 // 最多33行
 //var res [34]int
 //func init() {
@@ -28,18 +30,20 @@ package main
 //}
 //
 //return res[:rowIndex+1]
-
+func main()  {
+	fmt.Println(getRow(3))
+}
 // O(n)空间复杂度
 func getRow(rowIndex int) []int {
 	res := make([]int, rowIndex+1)
 
 	res[0] = 1
 
-	prev := res[0]
-	for i := 1; i < rowIndex; i++ {
-		temp := res[i]
-		res[i] += prev
-		prev = temp
+	for i := 0; i <= rowIndex; i++ {
+		prev := res[0]
+		for j := 1; j <= i; j++ {
+			prev, res[j] = res[j], res[j]+prev
+		}
 	}
 
 	return res
