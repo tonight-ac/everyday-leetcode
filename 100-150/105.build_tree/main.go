@@ -13,7 +13,8 @@ type TreeNode struct {
 // 1  15 7
 // 递归构建
 // 分组找规律
-//preorder = [3, 9,1, 20,15,7], inorder = [1,9, 3, 15,20,7]
+// preorder = [3, 9,1, 20,15,7], inorder = [1,9, 3, 15,20,7]
+// 保证每次递归传入的都是子树自己的前序和中序
 func buildTree(preorder []int, inorder []int) *TreeNode {
 	if len(preorder) == 0 { return nil }
 	if len(preorder) == 1 { return &TreeNode{Val: preorder[0]} }
