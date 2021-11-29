@@ -11,7 +11,6 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-// TODO
 // 借鉴108 通过快慢指针，判断中间位置
 func sortedListToBST(head *ListNode) *TreeNode {
 	if head == nil { return nil }
