@@ -107,6 +107,9 @@ func main() {
 //}
 func recoverTree(root *TreeNode)  {
 	var nums []int
+	// 中序遍历，结果放进nums
+	// 用中序遍历的原因，左子树必然在自己左边，右子树必然在自己右边
+	// 而左边必然小于自己，右边的必然大于自己，寻找不符合升序要求的就行了
 	var inorder func(node *TreeNode)
 	inorder = func(node *TreeNode) {
 		if node == nil {
@@ -117,30 +120,40 @@ func recoverTree(root *TreeNode)  {
 		inorder(node.Right)
 	}
 	inorder(root)
+	// 修正顺序 x y 为需要修复的数据
 	x, y := findTwoSwapped(nums)
+	// 复原
 	recover(root, 2, x, y)
 }
+//    3
+//  1   2
+//   4
 
+// 2 1 3 4
+// 1 4 3 2
 func findTwoSwapped(nums []int) (int, int) {
 	index1, index2 := -1, -1
 	for i := 0; i < len(nums) - 1; i++ {
 		if nums[i + 1] < nums[i] {
 			index2 = i + 1
-			if index1 == -1 {
+			if index1 == -1 { // 先预设只有一个存在问题
 				index1 = i
-			} else {
+			} else { // 两个均已经找到
 				break
 			}
 		}
 	}
+	// 做交换
 	x, y := nums[index1], nums[index2]
 	return x, y
 }
+
 
 func recover(root *TreeNode, count, x, y int) {
 	if root == nil {
 		return
 	}
+	// 给数值做交换
 	if root.Val == x || root.Val == y {
 		if root.Val == x {
 			root.Val = y
@@ -148,6 +161,7 @@ func recover(root *TreeNode, count, x, y int) {
 			root.Val = x
 		}
 		count--
+		// 需要修复的节点数归零
 		if count == 0 {
 			return
 		}
