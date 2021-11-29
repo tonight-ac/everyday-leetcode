@@ -5,7 +5,7 @@ func generate(numRows int) [][]int {
 
 	res[0] = []int{1}
 
-	for i := 2; i <= numRows; i++ {
+	for i := 1; i < numRows; i++ {
 		res[i] = make([]int, i)
 		for j := 0; j < len(res[i]); j++ {
 			if j > 0 {
