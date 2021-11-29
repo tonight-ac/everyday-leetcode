@@ -14,8 +14,8 @@ type TreeNode struct {
 //预期结果：
 //true
 
-//func hasPathSum(root *TreeNode, targetSum int) bool {
-//	if root == nil { return false }
-//	if targetSum == root.Val && root.Left == nil && root.Right == nil { return true }
-//	return hasPathSum(root.Left, targetSum-root.Val) || hasPathSum(root.Right, targetSum-root.Val)
-//}
+func hasPathSum(root *TreeNode, targetSum int) bool {
+	if root == nil { return false }
+	if targetSum == root.Val && root.Left == nil && root.Right == nil { return true }
+	return hasPathSum(root.Left, targetSum-root.Val) || hasPathSum(root.Right, targetSum-root.Val)
+}
