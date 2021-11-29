@@ -9,8 +9,22 @@ import "fmt"
 //"bcddceeeebecbc"
 func main() {
 	//fmt.Println(numDistinct("adbdadeecadeadeccaeaabdabdbcdabddddabcaaadbabaaedeeddeaeebcdeabcaaaeeaeeabcddcebddebeebedaecccbdcbcedbdaeaedcdebeecdaaedaacadbdccabddaddacdddc", "bcddceeeebecbc"))
-	fmt.Println(numDistinct("eee", "eee"))
+	fmt.Println(numDistinct("rabbbit", "rabbit"))
 }
+
+func numDistinct(s string, t string) int {
+	return 0
+}
+//   a b c d
+// a 1 1 1
+// b
+// d
+
+//   e e e
+// e 1 2 3
+// e 0 1 3
+// e 0 0 1
+// 如果当前s不要还能匹配说明是一种新情况
 //   r a b b b i t
 // r 1 1 1 1 1 1 1
 // a 0 1 1 1 1 1 1
@@ -18,9 +32,53 @@ func main() {
 // b 0 0 0 1 3 3 3
 // i 0 0 0 0 0 1 1
 // t 0 0 0 0 0 0 1
-func numDistinct(s string, t string) int {
-	return 0
-}
+// dp[i][j-1]为0 dp[i][j] = 1
+// dp[i][j-1]不为0
+//		还需要区分情况
+//			t[i] != t[i-1] dp[i][j] += dp[i][j-1]
+// 			t[i] == t[i-1] dp[i][j] += dp[i][j-1] dp[i][j] += dp[i-1][j-1]
+//func numDistinct(s string, t string) int {
+//	// 初始化dp
+//	dp := make([][]int, len(t))
+//	for i := 0; i < len(dp); i++ { dp[i] = make([]int, len(s)) }
+//
+//	for i := 0; i < len(s); i++ {
+//		if t[0] == s[i] { dp[0][i] = 1 }
+//		if i > 0 { dp[0][i] += dp[0][i-1] }
+//	}
+//
+//	for i := 1; i < len(t); i++ {
+//		for j := i; j < len(s); j++ {
+//			if t[i] == s[j] {
+//				if dp[i][j-1] == 0 {
+//					// 初次匹配
+//					dp[i][j] = 1
+//				} else {
+//					dp[i][j] += dp[i][j-1]
+//					if t[i] == t[i-1] {
+//						dp[i][j] += dp[i-1][j-1]
+//					}
+//				}
+//			} else {
+//				dp[i][j] = dp[i][j-1]
+//			}
+//		}
+//	}
+//
+//	res := 1
+//	for i := 0; i < len(t); i++ {
+//		min := dp[i][len(s)-1]
+//		for i < len(t) - 1 && t[i] == t[i+1] {
+//			i++
+//			if min > dp[i][len(s)-1] {
+//				min = dp[i][len(s)-1]
+//			}
+//		}
+//		res *= min
+//	}
+//
+//	return res
+//}
 
 // 搜索超时
 //var counts [][]int
