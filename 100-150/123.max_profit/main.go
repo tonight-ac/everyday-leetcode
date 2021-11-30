@@ -1,15 +1,18 @@
 package main
 
+import "fmt"
+
+func main() {
+	fmt.Println(maxProfit([]int{3,3,5,0,0,3,1,4}))
+}
 
 func maxProfit(prices []int) int {
 	dp := make([][]int, len(prices))
 	for i := 0; i < len(dp); i++ { dp[i] = make([]int, len(prices)) }
 
 	for i := 0; i < len(prices); i++ {
-		for j := 0; j < len(prices); j++ {
-			if j > i {
-				dp[i][j] = oneMaxProfit(prices[i:j+1])
-			}
+		for j := i+1; j < len(prices); j++ {
+			dp[i][j] = oneMaxProfit(prices[i:j+1])
 		}
 	}
 
