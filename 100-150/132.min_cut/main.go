@@ -9,14 +9,17 @@ func minCut(s string) int {
 	i, j := longestPalindrome(s)
 
 	// 没有更多的子串了
+	// 最长就是1了，所以每个都需要分割
 	if j == i + 1 { return len(s) - 1 }
 
 	res := 0
 	left, right := 0, 0
+	// 左侧还有，需要割一刀
 	if i != 0 {
 		left = minCut(s[:i])
 		res++
 	}
+	// 右侧还有需要割一刀
 	if j != len(s) {
 		right = minCut(s[j:])
 		res++
