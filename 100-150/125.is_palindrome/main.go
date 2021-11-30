@@ -1,9 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"strings"
 	"unicode"
 )
+
+func main() {
+	fmt.Println(isPalindrome("A man, a plan, a canal: Panama"))
+}
 
 func isPalindrome(s string) bool {
 	// 清洗s
@@ -13,7 +18,7 @@ func isPalindrome(s string) bool {
 		if unicode.IsDigit(r) || unicode.IsLower(r) {
 			b.WriteRune(r)
 		} else if unicode.IsUpper(r) {
-			b.WriteRune(r)
+			b.WriteRune(unicode.ToLower(r))
 		}
 	}
 
