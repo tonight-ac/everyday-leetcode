@@ -8,18 +8,23 @@ func main() {
 
 // 寻找能赚钱的交易，选最大两次
 func maxProfit(prices []int) int {
-	res := 0
-	min := prices[0]
+	dp1 := make([]int, len(prices))
+	// 从左向右做多
+	min, max := prices[0], prices[0]
 	for i := 1; i < len(prices); i++ {
-		if prices[i] > min {
-			if  res < prices[i] - min {
-				res = prices[i] - min
-			}
-		} else {
-			min = prices[i]
-		}
+		if min > prices[i] { min = prices[i] }
+		if max < prices[i] { max = prices[i] }
+		if max - min > 0 { dp1[i] = max - min }
 	}
 
+	dp2 := make([]int, len(prices))
+	// 从右向左做空
+	min, max = prices[len(prices)-1], prices[len(prices)-1]
+	for i := len(prices)-2; i >= 0; i-- {
+		if min > prices[i] { min = prices[i] }
+		if max < prices[i] { max = prices[i] }
+		if max - min > 0 { dp2[i] = max - min }
+	}
 	return 0
 }
 
