@@ -8,6 +8,7 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
+// TODO未完成
 func maxPathSum(root *TreeNode) int {
 	// 三个起码选一个，最多选三个，要求和最大
 	nums := []int{ root.Val }
