@@ -4,13 +4,14 @@ import "fmt"
 
 //[3,3,5,0,0,3,1,4]
 func main() {
-	fmt.Println(maxProfit([]int{1,2,3,4,5}))
+	fmt.Println(maxProfit([]int{7,11,4,1,2}))
 }
 
-// 寻找能赚钱的交易，选最大两次
+// 优化一下空间
 func maxProfit(prices []int) int {
-	dp1 := make([]int, len(prices))
+	dp := make([]int, len(prices))
 	// 从左向右做多
+	leftMax := 0
 	min, max := prices[0], prices[0]
 	for i := 1; i < len(prices); i++ {
 		if min > prices[i] {
@@ -18,30 +19,80 @@ func maxProfit(prices []int) int {
 			max = prices[i]
 		}
 		if max < prices[i] { max = prices[i] }
-		if max - min > 0 { dp1[i] = max - min }
+		if leftMax < max - min {
+			leftMax = max - min
+		}
+		dp[i] = leftMax
 	}
 
-	dp2 := make([]int, len(prices))
+	res := dp[len(dp)-1]
+
 	// 从右向左做空
+	rightMax := 0
 	min, max = prices[len(prices)-1], prices[len(prices)-1]
-	for i := len(prices)-2; i >= 0; i-- {
+	for i := len(prices)-2; i > 0; i-- {
 		if max < prices[i] {
 			max = prices[i]
 			min = prices[i]
 		}
 		if min > prices[i] { min = prices[i] }
-		if max - min > 0 { dp2[i] = max - min }
-	}
-
-	res := 0
-	for i := 0; i < len(prices)-1; i++ {
-		if res < dp1[i] + dp2[i+1] {
-			res = dp1[i] + dp2[i+1]
+		if rightMax < max - min {
+			rightMax = max - min
+		}
+		if res < dp[i-1] + rightMax {
+			res = dp[i-1] + rightMax
 		}
 	}
 
 	return res
 }
+
+// 可以过！！！
+// 寻找能赚钱的交易，选最大两次
+//func maxProfit(prices []int) int {
+//	dp1 := make([]int, len(prices))
+//	// 从左向右做多
+//	leftMax := 0
+//	min, max := prices[0], prices[0]
+//	for i := 1; i < len(prices); i++ {
+//		if min > prices[i] {
+//			min = prices[i]
+//			max = prices[i]
+//		}
+//		if max < prices[i] { max = prices[i] }
+//		if leftMax < max - min {
+//			leftMax = max - min
+//		}
+//		dp1[i] = leftMax
+//		//if max - min > 0 { dp1[i] = max - min }
+//	}
+//
+//	dp2 := make([]int, len(prices))
+//	// 从右向左做空
+//	rightMax := 0
+//	min, max = prices[len(prices)-1], prices[len(prices)-1]
+//	for i := len(prices)-2; i >= 0; i-- {
+//		if max < prices[i] {
+//			max = prices[i]
+//			min = prices[i]
+//		}
+//		if min > prices[i] { min = prices[i] }
+//		if rightMax < max - min {
+//			rightMax = max - min
+//		}
+//		dp2[i] = rightMax
+//		//if max - min > 0 { dp2[i] = max - min }
+//	}
+//
+//	res := dp2[0]
+//	for i := 0; i < len(prices)-1; i++ {
+//		if res < dp1[i] + dp2[i+1] {
+//			res = dp1[i] + dp2[i+1]
+//		}
+//	}
+//
+//	return res
+//}
 
 // 超时了nmd
 //func maxProfit(prices []int) int {
