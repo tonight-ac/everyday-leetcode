@@ -1,6 +1,9 @@
 package main
 
-import "sort"
+import (
+	"sort"
+	"strconv"
+)
 
 var desc = [3]string{"Gold Medal", "Silver Medal", "Bronze Medal"}
 
