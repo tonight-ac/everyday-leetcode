@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sort"
 )
 
 type TreeNode struct {
@@ -36,7 +35,7 @@ func main() {
 // TODO未完成
 var res int
 func maxPathSum(root *TreeNode) int {
-	res = 0
+	res = root.Val
 
 	recursion(root)
 
@@ -49,38 +48,28 @@ func recursion(root *TreeNode) int {
 	nums := []int{ root.Val }
 	if root.Left != nil {
 		left = maxPathSum(root.Left)
-		//nums = append(nums, left)
 		nums = append(nums, left + root.Val)
 	}
 	if root.Right != nil {
 		right = maxPathSum(root.Right)
-		//nums = append(nums, right)
 		nums = append(nums, right + root.Val)
 	}
 	if root.Left != nil && root.Right != nil {
 		nums = append(nums, left + right + root.Val)
 	}
 
-	sort.Ints(nums)
+	//sort.Ints(nums)
 
-	temp := nums[0]
-	for i := 0; i < len(nums); i++ {
-		if temp < nums[i] {
-			temp = nums[i]
-		}
-	}
+	//nodeMax := nums[len(nums)-1]
+	//
+	//nums = append(nums, left)
+	//nums = append(nums, right)
+	//
+	//sort.Ints(nums)
+	//
+	//if res < nums[]
 
-	// 取这些情况最大值
-	m := temp
-	if root.Left != nil && root.Right != nil {
-		m = max(temp, max(left, right))
-	}
-
-	if res < m { res = m}
-
-	if m > temp { return 0 }
-
-	return temp
+	return 0
 }
 
 func max(a, b int) int {
