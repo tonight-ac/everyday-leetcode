@@ -44,6 +44,7 @@ func recursion(i int, list []string) {
 }
 
 // 找到所有回文子串的下标 TODO
+// 需要参考647题
 func findAllSubPalindrome(s string) map[int]map[int]interface{} {
 	res := make(map[int]map[int]interface{})
 
