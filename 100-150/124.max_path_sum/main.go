@@ -12,9 +12,9 @@ type TreeNode struct {
 }
 
 func main() {
-	fmt.Println(maxPathSum(&TreeNode{
-		Val: -3,
-	}))
+	//fmt.Println(maxPathSum(&TreeNode{
+	//	Val: -3,
+	//}))
 	//fmt.Println(maxPathSum(&TreeNode{
 	//	Val: -10,
 	//	Left: &TreeNode{
@@ -30,13 +30,41 @@ func main() {
 	//		},
 	//	},
 	//}))
+	//fmt.Println(maxPathSum(&TreeNode{
+	//	Val: 1,
+	//	Left: &TreeNode{
+	//		Val: -2,
+	//		Left: &TreeNode{
+	//			Val: 1,
+	//			Left: &TreeNode{
+	//				Val: -1,
+	//			},
+	//		},
+	//		Right: &TreeNode{
+	//			Val: 3,
+	//		},
+	//	},
+	//	Right: &TreeNode{
+	//		Val: -3,
+	//		Left: &TreeNode{
+	//			Val: -2,
+	//		},
+	//	},
+	//}))
+	fmt.Println(maxPathSum(&TreeNode{
+		Val: -2,
+		Left: &TreeNode{
+			Val: -1,
+		},
+	}))
 }
+
 //[1,-2,-3,1,3,-2,null,-1]
-//      1
-//   -2   -3
-//  1  3 -2
+//       1
+//    -2   -3
+//   1  3 -2
 // -1
-// TODO未完成
+
 var res int
 func maxPathSum(root *TreeNode) int {
 	res = root.Val
@@ -46,28 +74,32 @@ func maxPathSum(root *TreeNode) int {
 	return res
 }
 
-func recursion(root *TreeNode) int {
+func recursion(root *TreeNode) *int {
 	// 三个起码选一个，最多选三个，要求和最大
-	var left, right int
+	var left, right *int
 	nums := []int{ root.Val }
 	if root.Left != nil {
-		left = maxPathSum(root.Left)
-		nums = append(nums, left + root.Val)
+		left = recursion(root.Left)
+		if left != nil {
+			nums = append(nums, *left + root.Val)
+		}
 	}
 	if root.Right != nil {
-		right = maxPathSum(root.Right)
-		nums = append(nums, right + root.Val)
-	}
-	if root.Left != nil && root.Right != nil {
-		nums = append(nums, left + right + root.Val)
+		right = recursion(root.Right)
+		if right != nil {
+			nums = append(nums, *right + root.Val)
+		}
 	}
 
 	sort.Ints(nums)
 
 	nodeMax := nums[len(nums)-1]
 
-	if root.Left != nil { nums = append(nums, left) }
-	if root.Right != nil { nums = append(nums, right) }
+	if left != nil { nums = append(nums, *left) }
+	if right != nil { nums = append(nums, *right) }
+	if left != nil && right != nil {
+		nums = append(nums, *left + *right + root.Val)
+	}
 
 	sort.Ints(nums)
 
@@ -75,8 +107,9 @@ func recursion(root *TreeNode) int {
 		res = nums[len(nums)-1]
 	}
 
-	if nodeMax < 0 { return 0 }
-	return nodeMax
+	if nodeMax < 0 { return nil }
+
+	return &nodeMax
 }
 
 func max(a, b int) int {
