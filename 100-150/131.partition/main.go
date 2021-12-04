@@ -5,19 +5,17 @@ package main
 // a a b aa
 
 
-// 把字符串反转，搞一个dp
-//
+// 其实主要问题在于怎么切分
+// 然后对切分的结果做判断
 func partition(s string) [][]string {
-	//dp[i][j] 表示i到j之间的所有子串组合
-	for i := 0; i < len(s); i++ {
-		for j := i; j < len(s); j++ {
 
-		}
-	}
 	return nil
 }
 
 func isPalindrome(s string) bool {
+	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
+		if s[i] != s[j] { return false }
+	}
 
 	return true
 }
