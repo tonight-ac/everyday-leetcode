@@ -111,8 +111,3 @@ func recursion(root *TreeNode) *int {
 
 	return &nodeMax
 }
-
-func max(a, b int) int {
-	if a > b { return a }
-	return b
-}
