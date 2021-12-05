@@ -10,13 +10,22 @@ func candy(ratings []int) int {
 		}
 	}
 
-	res := 0
 	for i := len(ratings) - 2; i >= 0; i-- {
-		if ratings[i] > ratings[i+1] && candies[i] <= candies[i+1] {
-			candies[i] = candies[i+1] + 1
+		if ratings[i] > ratings[i+1] {
+			candies[i] = max(candies[i], candies[i+1] + 1)
 		}
+	}
+
+	// 每人至少分1个
+	res := len(ratings)
+	for i := 0; i < len(candies); i++ {
 		res += candies[i]
 	}
 
-	return res + candies[len(candies)-1] + len(ratings)
+	return res
+}
+
+func max(a, b int) int {
+	if a > b { return a }
+	return b
 }
