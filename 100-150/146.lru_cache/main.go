@@ -5,8 +5,9 @@ package main
 // 维护一个hash，且维护一个操作次数的集合
 
 type node struct {
-	val   int
-	prev  *node
+	key  int
+	val  int
+	prev *node
 	next *node
 }
 
@@ -46,9 +47,25 @@ func (c *LRUCache) Put(key int, value int) {
 	// 不存在，是新插入的，且目前容量已经满了
 	if len(c.m) >= c.limit && c.m[key] == nil {
 		// 淘汰逻辑
-		c.head.prev = c.head.prev.prev
+		// 删除map
+		delete(c.m, c.head.next.key)
+		// 删除头部
+		c.head.next = c.head.next.next
 	}
 
+	var n *node
+	if c.m[key] == nil {
+		n = &node{key: key, val: value}
+	} else {
+		n = c.m[key]
+		// 将其从双向中删除
+		n.prev.next = n.next
+	}
+
+	// 将n插入表尾
+	n.prev = c.head.prev
+	c.head.prev = n
+	n.next = c.head
 }
 
 /**
