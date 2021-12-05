@@ -5,6 +5,7 @@ import "fmt"
 func main() {
 	fmt.Println(countSubstrings("abc"))
 }
+
 func countSubstrings(s string) int {
 	res := 0
 
