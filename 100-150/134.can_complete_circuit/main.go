@@ -10,8 +10,15 @@ import "fmt"
 // 3, 4, 3
 // -1 -1 1
 
+//输入：
+//[5,8,2,8]
+//[6,5,6,6]
+//输出：
+//1
+//预期结果：
+//3
 func main() {
-	fmt.Println(canCompleteCircuit([]int{2,3,4}, []int{3,4,3}))
+	fmt.Println(canCompleteCircuit([]int{5,8,2,8}, []int{6,5,6,6}))
 }
 
 // -1 -11 -1 -1 13 -1 1

@@ -28,6 +28,7 @@ func main()  {
 	fmt.Println(wordBreak("applepenapple", []string{"apple", "pen"}))
 }
 
+// TODO 超时了
 func wordBreak(s string, wordDict []string) bool {
 	if len(s) == 0 { return true }
 	for _, v := range wordDict {
