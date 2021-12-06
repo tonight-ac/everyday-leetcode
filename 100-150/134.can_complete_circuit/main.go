@@ -21,29 +21,40 @@ func main() {
 	fmt.Println(canCompleteCircuit([]int{5,8,2,8}, []int{6,5,6,6}))
 }
 
-// 先搞一版暴力
-// 超时了nmd
+// 优化一下
 func canCompleteCircuit(gas []int, cost []int) int {
 	for i := 0; i < len(gas); i++ {
 		gas[i] -= cost[i]
 	}
 
-	for i := 0; i < len(gas); i++ {
-		tot := gas[i]
-		if tot < 0 { continue }
-		for j, k := (i + 1)%len(gas), 0; k < len(gas) - 1; k, j = k + 1, (j + 1)%len(gas) {
-			tot += gas[j]
-			if tot < 0 {
-				break
-			}
-		}
-		if tot >= 0 {
-			return i
-		}
-	}
+	// 问题转化为从哪个下标开始连续相加过程中不会出现负数
+	// 结果唯一或者不存在
 
-	return -1
+	return 0
 }
+// 先搞一版暴力
+// 超时了nmd
+//func canCompleteCircuit(gas []int, cost []int) int {
+//	for i := 0; i < len(gas); i++ {
+//		gas[i] -= cost[i]
+//	}
+//
+//	for i := 0; i < len(gas); i++ {
+//		tot := gas[i]
+//		if tot < 0 { continue }
+//		for j, k := (i + 1)%len(gas), 0; k < len(gas) - 1; k, j = k + 1, (j + 1)%len(gas) {
+//			tot += gas[j]
+//			if tot < 0 {
+//				break
+//			}
+//		}
+//		if tot >= 0 {
+//			return i
+//		}
+//	}
+//
+//	return -1
+//}
 
 // -1 -11 -1 -1 13 -1 1
 // 如果数值能够刚好持平或者更大，则要从首个最大正数的出发
