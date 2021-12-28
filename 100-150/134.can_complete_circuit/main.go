@@ -21,7 +21,7 @@ func main() {
 	fmt.Println(canCompleteCircuit([]int{5,8,2,8}, []int{6,5,6,6}))
 }
 
-// 优化一下
+// 优化一下 TODO
 func canCompleteCircuit(gas []int, cost []int) int {
 	for i := 0; i < len(gas); i++ {
 		gas[i] -= cost[i]
