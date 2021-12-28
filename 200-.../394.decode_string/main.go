@@ -36,12 +36,14 @@ func decodeString(s string) string {
 			// 向前寻找重复次数
 			count := 0
 			for j := left - 1; j >= 0 && unicode.IsDigit(rune(s[j])); j-- {
+				// 处理多位数字
 				count += int(s[j] - '0') * int(math.Pow10(left - 1 - j))
 			}
 
 			// 向后寻找右括号
 			right := 0
 			for pair, j := 1, left + 1; j < len(s); j++ {
+				// pair处理多括号嵌套，模拟一个栈
 				if s[j] == '[' {
 					pair++
 				} else if s[j] == ']' {
