@@ -23,6 +23,7 @@ func main() {
 
 // 优化一下
 // 主要利用的特性是，没有解，或者有解必唯一
+
 func canCompleteCircuit(gas []int, cost []int) int {
 	n := len(gas)
 	sum := 0
