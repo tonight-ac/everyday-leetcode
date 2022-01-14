@@ -22,16 +22,30 @@ func main() {
 }
 
 // 优化一下
+// 主要利用的特性是，没有解，或者有解必唯一
 func canCompleteCircuit(gas []int, cost []int) int {
-	for i := 0; i < len(gas); i++ {
-		gas[i] -= cost[i]
+	n := len(gas)
+	sum := 0
+	for i := 0; i < n; i++ {
+		sum += gas[i] - cost[i]
 	}
 
-	// 问题转化为从哪个下标开始连续相加过程中不会出现负数
-	// 结果唯一或者不存在
+	if sum < 0 {
+		return -1
+	}
 
-	return 0
+	currentGas := 0
+	start := 0
+	for i := 0; i < n; i++ {
+		currentGas += gas[i] - cost[i]
+		if currentGas < 0 {
+			currentGas = 0
+			start = i + 1
+		}
+	}
+	return start
 }
+
 // 先搞一版暴力
 // 超时了nmd
 //func canCompleteCircuit(gas []int, cost []int) int {
