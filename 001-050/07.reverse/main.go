@@ -8,6 +8,8 @@ func main() {
 	fmt.Println(reverse(-123))
 }
 
+// int32 范围 -2147483648 ~ 2147483647
+
 func reverse(x int) int {
 	if x == 0 { return 0 }
 
