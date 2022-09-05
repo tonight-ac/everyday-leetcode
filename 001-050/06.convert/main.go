@@ -27,19 +27,25 @@ func convert(s string, numRows int) string {
 	// 使用+拼接字符串消耗性能和内存
 	var res strings.Builder
 
-	for row := 0; row < numRows; row++ {
+	// 处理首行
+	if numRows > 0 {
+		for idx := 0; idx < len(s); idx += cycle {
+			res.WriteByte(s[idx])
+		}
+	}
+	for row := 1; row < numRows - 1; row++ {
 		// 计算需要跳步次数
 		diff := cycle - 2 * row
-		if diff == 0 {
-			diff = cycle
-		}
 		for idx := row; idx < len(s); {
 			res.WriteByte(s[idx])
 			idx += diff
-			// 跳步等于全周期步长时做减法会出现0，导致原地踏步一次
-			if diff != cycle {
-				diff = cycle - diff
-			}
+			diff = cycle - diff
+		}
+	}
+	// 处理尾行
+	if numRows > 1 {
+		for idx := numRows - 1; idx < len(s); idx += cycle {
+			res.WriteByte(s[idx])
 		}
 	}
 
