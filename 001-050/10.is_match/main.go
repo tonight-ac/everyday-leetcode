@@ -12,8 +12,8 @@ package main
 // p: mis*is*p*.
 func isMatch(s string, p string) bool {
 	// s为空 p为空 为真
-	// s不为空 p不为空 不能判断
-	// s为空 p不为空 不能判断真假 ex .*
+	// s不为空 p不为空 不能从长度上判断真假
+	// s为空 p不为空 不能从长度上判断真假 ex s: "" p: ".*"
 	// s不为空 p为空 为假
 	if len(p) == 0 {
 		return len(s) == 0
