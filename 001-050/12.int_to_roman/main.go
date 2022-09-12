@@ -24,13 +24,13 @@ var m = map[int]string{
 // 对于 I II III IV V VI VII VIII IX X
 func intToRoman(num int) string {
 	// num最大3999，所以最多四位
-	res := make([]string, 4)
+	res := ""
 
-	//输入: num = 1994
+	//输入: num = 1
 	//输出: "MCMXCIV"
 	//解释: M = 1000, CM = 900, XC = 90, IV = 4.
 
-	for i, j := 1, 1; num != 0; i, j = i*10, j+1 {
+	for i := 1; num != 0; i*=10 {
 		// 求余数
 		mod := num % 10
 
@@ -50,11 +50,11 @@ func intToRoman(num int) string {
 		}
 
 		// 保存罗马数字（字符串）
-		res[len(res)-j] = roman
+		res = roman + res
 
 		// 处理下一位
 		num /= 10
 	}
 
-	return strings.Join(res, "")
+	return res
 }
