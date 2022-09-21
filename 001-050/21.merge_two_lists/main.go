@@ -13,7 +13,10 @@ func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
 	head := &ListNode{}
 	node := head
 
-	// 两个链表长度可能不登长，先处理公共长部分
+	// l1 1->2->3
+	// l2 1->2
+	// node 1->1->2->2->3
+	// 两个链表长度可能不等长，先处理公共长部分
 	for l1 != nil && l2 != nil {
 		if l1.Val <= l2.Val {
 			node.Next = l1 // 添加l1

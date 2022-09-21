@@ -37,7 +37,7 @@ func recursion(left, right int, s string) {
 		s = s[:len(s)-1]
 	}
 	// 如果左号已经出现次数小于等于总长度一半，且右号数量小于左号数量
-	if left <= tot && right < left {
+	if right < left {
 		s += ")"
 		recursion(left, right+1, s)
 		s = s[:len(s)-1]

@@ -16,25 +16,21 @@ type ListNode struct {
 // ----------------- m单位
 // ---------++++++++ n单位"-" m-n单位"+" 指针1
 // +++++++++-------- m-n单位"-" n单位"+" 指针2
+
+// ++++++++--------- 一个节点走n个长度
+// -----------------
 func removeNthFromEnd(head *ListNode, n int) *ListNode {
 	// 为了方便操作，加一个空的head节点，可以轻松解决去除第一个的情况
 	head = &ListNode{ Next: head }
 
+	// x 1 2 3 4 5
+	//          l1
+	//      l2
 	// 初始化两个指针
 	l1, l2 := head, head
 
-	//输入：
-	//[1,2,3,4,5]
-	//2
-	//输出：
-	//[1,2,4,5]
-	//预期结果：
-	//[1,2,3,5]
-
 	// 移动l1 n个单位
 	for ; n > 0; n-- { l1 = l1.Next }
-
-	if l1 == nil { return head }
 
 	// l1移动到尾部，l2同步移动
 	for ; l1.Next != nil; {
